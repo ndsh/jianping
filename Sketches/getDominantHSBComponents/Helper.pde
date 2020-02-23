@@ -5,6 +5,9 @@ void keyPressed() {
     } else if (key == 'c') {
       center = !center;
       println("center= " + center);
+    }  else if (key == 'r') {
+      rotate = !rotate;
+      println("rotate= " + rotate);
     }  
 }
 

@@ -11,12 +11,14 @@ int scaleZ = 2000;
 boolean firstRun = true;
 boolean p = true;
 boolean center = true;
+boolean rotate = false;
+float rotationSpeed = 0.001;
 
-int mode = 1;
+int mode = 0;
 float r = scaleZ; 
 
 void setup() {
-  size(600, 600, P3D);
+  size(1280, 800, P3D);
   surface.setLocation(0, 0);
   cam = new PeasyCam(this, scaleZ*4);
   cam.setWheelScale(0.2);
@@ -30,8 +32,10 @@ void setup() {
 }
 
 void draw() {
+  if(rotate) cam.rotateY(rotationSpeed);
   if(p) perspective(PI/5, 1000/1000, 1, 1000000);
-  background(255);
+  if(mode == 0) background(0, 0, 100);
+  else if(mode == 1) background(255);
   init();
   
   drawCenter();
@@ -47,7 +51,7 @@ void draw() {
       float saturation = map(nodes.get(i).getPosition().y, 0, 100, -scaleZ, scaleZ);
       float brightness = map(nodes.get(i).getPosition().z, 0, 100, -scaleY, scaleY);
       
-      println(brightness);
+      
       
       mX = saturation * cos(hue); //nodes.get(i).getPosition().x;
       //mY = map(nodes.get(i).getPosition().y, 0, 360, -scaleY, scaleY);
