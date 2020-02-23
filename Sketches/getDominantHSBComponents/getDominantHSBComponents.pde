@@ -14,11 +14,11 @@ boolean center = true;
 boolean rotate = false;
 float rotationSpeed = 0.001;
 
-int mode = 0;
+int mode = 1;
 float r = scaleZ; 
 
 void setup() {
-  size(1280, 800, P3D);
+  size(800, 800, P3D);
   surface.setLocation(0, 0);
   cam = new PeasyCam(this, scaleZ*4);
   cam.setWheelScale(0.2);
