@@ -369,6 +369,9 @@ void drawNodes() {
           imageMode(imageDraw);
           translate(width/2, height/2, 0);
           image(nodes.get(nodeNr).getImage(), 0, 0);
+          //int[] dd = nodes.get(nodeNr).getPosition();
+          //playNote(dd[1] + dd[2]);
+          // ear cancer
           popMatrix();
         }
         popStyle();
@@ -443,6 +446,6 @@ void assembleComponentList(int needle, int dominant) {
 void playNote(int note) {
     int mNote = Scale.note(Scale.MAJOR_PENTATONIC, Scale.NOTE_C4, note);
     mNote %= 127;
-    mEnv.play_note_on((note / 16) % 12, mNote, 100, 1.5f);
+    mEnv.play_note_on((note / 16) % 12, mNote, 100, 1.1f);
     mStep++;
 }
