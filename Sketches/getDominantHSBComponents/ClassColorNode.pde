@@ -3,7 +3,8 @@
 // represantation of a asset set
 class ColorNode {
   PImage p;
-  PVector dominant = new PVector(0, 0, 0);
+  //PVector dominant = new PVector(0, 0, 0);
+  int[] dominant = new int[3];
   int mode = 0;
   // 0 = HSB
   // 1 = RGB
@@ -13,6 +14,7 @@ class ColorNode {
     getDominant(0);
     getDominant(1);
     getDominant(2);
+    println("New node created with dominant values ( "+ dominant[0] + " / " + dominant[1] + " / " + dominant[2] + " ) from file:" + s);
   }
   
   void getDominant(int k) {
@@ -50,12 +52,17 @@ class ColorNode {
       }
     }
     //println(intermediate[index][0]);
+    /*
     if(k == 0) dominant.x = index;
     else if(k == 1) dominant.y = index;
     else if(k == 2) dominant.z = index;
+    */
+    if(k == 0) dominant[0] = (int)index;
+    else if(k == 1) dominant[1] = (int)index;
+    else if(k == 2) dominant[2] = (int)index;
   }
   
-  PVector getPosition() {
+  int[] getPosition() {
     return dominant;
   }
   
