@@ -4,6 +4,8 @@ class Importer {
   String path;
   StringList folders = new StringList();
   StringList files = new StringList();
+  
+  String[] legalFiles = {"jpg", "JPG", "jpeg", "JPEG", "png", "PNG"};
 
   Importer(String _root) {
     // Using just the path of this sketch to demonstrate,
@@ -31,6 +33,14 @@ class Importer {
 
     for (File f : allFiles) {
       if (!f.isDirectory()) {
+        boolean okayFile = false;
+        String[] split = split(f.getName(), ".");
+        for(int i = 0; i<legalFiles.length; i++) {
+          if(legalFiles[i].equals(split[1])) {
+            okayFile = true;
+            break;
+          }
+        }
         /*
         println("Name: " + f.getName());
          println("Full path: " + f.getAbsolutePath());
@@ -40,7 +50,7 @@ class Importer {
          println("Last Modified: " + lastModified);
          println("-----------------------");
          */
-        files.append(f.getAbsolutePath());
+        if(okayFile) files.append(f.getAbsolutePath());
       }
     }
     println(files.size() + " file(s) found");
