@@ -1,6 +1,6 @@
 class Exporter {
-  // Exports in format
-  // Exports / {Application} / {Date} / {Frame}
+  // Exports in format:
+  // Exports / {Application Name} / {Date_Time} / {Frame} .ext
   
   // frameLimit = wieviele Frames wir haben wollen
   int frameRate;
@@ -11,7 +11,6 @@ class Exporter {
   int saveMode = 0;
   
   String y = year()+"";
-  
   String m = leadingZero(month());
   String d = leadingZero(day());
   String h = leadingZero(hour());
@@ -27,6 +26,8 @@ class Exporter {
   }
   
   void export() {
+    // for more information about which file extension to pick:
+    // https://forum.processing.org/one/topic/saveframe-framerate-comparison-discussion-on-capturing-high-resolution-sketch-output.html
     String folderFormat = y + m + d + "_" + h + i + s;
     String fullExportPath = "../../Exports/"+ path +"/"+ folderFormat +"/"; 
     if(saveMode == 0) {
