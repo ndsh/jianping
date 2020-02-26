@@ -7,8 +7,8 @@ void setup() {
   frameRate(FPS);
   exporter = new Exporter(FPS);
   exporter.setPath(appName);
-  //exporter.setLimit(10);
-  exporter.setMinutes(1);
+  exporter.setLimit(10);
+  //exporter.setMinutes(1);
   
 }
 
