@@ -1,5 +1,4 @@
 class Mover {
-
   PVector origin;
   float rotation;
   

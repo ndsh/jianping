@@ -32,7 +32,7 @@ int imageDraw = CENTER;
 
 /* * * * * * * * * * * * * 
   TODO
-    [ ] pimage in brush oder sogar ColorNode
+    [/] pimage in brush oder sogar ColorNode
     [ ] blendModes / alpha handling
 */
 
