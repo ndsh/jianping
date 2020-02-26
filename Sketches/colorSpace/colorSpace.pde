@@ -19,7 +19,7 @@ PImage marke;
 
 boolean firstRun = true;
 boolean isRunnable = false;
-boolean p = true;
+boolean record = false;
 boolean center = true;
 boolean rotate = false;
 boolean filter = true;
@@ -44,6 +44,8 @@ int imageDraw = 0;
 int componentMin[] = new int[3];
 int componentMax[] = new int[3];
 
+int FPS = 30;
+
 void setup() {
   size(3200, 1000, P3D);
   marke = loadImage("tge.png");
@@ -62,7 +64,7 @@ void setup() {
 void draw() {
   if(rotate) cam.rotateY(rotationSpeed);
   
-  if(p) perspective(PI/5, width/height, 1, 1000000);
+  perspective(PI/5, width/height, 1, 1000000);
   if(mode == 0) {
     colorMode(HSB, 360, 100, 100);
     if(redrawBackground) background(0, 0, 100);

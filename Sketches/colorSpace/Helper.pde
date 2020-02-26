@@ -1,13 +1,16 @@
 void keyPressed() {
-    if (key == 'p') {
-      p = !p;
-      println("p= " + p);
+    if (key == 'r') {
+      println("record= " + record);
     } else if (key == 'c') {
       center = !center;
       println("center= " + center);
-    }  else if (key == 'r') {
+    }  else if (key == 'p') {
       rotate = !rotate;
-      println("rotate= " + rotate);
+      println("pivot= " + rotate);
+    }  else if (key == 'q') {
+      println("Quitting sketch");
+      exit();
+      
     }
 }
 
