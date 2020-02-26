@@ -1,5 +1,6 @@
 void keyPressed() {
     if (key == 'r') {
+      record = !record;
       println("record= " + record);
     } else if (key == 'c') {
       center = !center;
