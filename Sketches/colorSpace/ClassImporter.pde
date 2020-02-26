@@ -13,7 +13,7 @@ class Importer {
     path = sketchPath(_root);
     loadFolders();
     if (getFolders().size() > 0) {
-      loadFiles(getFolders().get(2));
+      loadFiles(getFolders().get(0));
     }
   }
 

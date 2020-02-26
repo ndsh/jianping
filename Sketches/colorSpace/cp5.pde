@@ -5,7 +5,6 @@ CheckBox imageDrawCheckbox;
 CheckBox filterCheckbox;
 CheckBox presentationModeCheckbox;
 CheckBox redrawBGCheckbox;
-Chart myChart;
 Range range0;
 Range range1;
 Range range2;
