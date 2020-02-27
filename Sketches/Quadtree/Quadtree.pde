@@ -1,8 +1,9 @@
 PVector[][] imgb;
 
+String foldername = "targets/";
 String filename = "exhibitionTitle_widescreen_black";
 String fileext = ".jpg";
-String foldername = "./targets/";
+
 
 Importer importer;
 Exporter exporter;
@@ -50,7 +51,8 @@ ArrayList<LImage> imgsb = new ArrayList<LImage>();
 HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
 
 void setup() {
-  size(3200, 1000);
+  //size(3200, 1000);
+  size(800, 250);
   
   sessionid = hex((int)random(0xffff),4);
   img = loadImage(foldername+filename+fileext);
@@ -61,17 +63,6 @@ void setup() {
   buffer.noStroke();
   buffer.background(0);
   buffer.endDraw();
-
-  // calculate window size
-  float ratio = (float)img.width/(float)img.height;
-  int neww, newh;
-  if(ratio < 1.0) {
-    neww = (int)(max_display_size * ratio);
-    newh = max_display_size;
-  } else {
-    neww = max_display_size;
-    newh = (int)(max_display_size / ratio);
-  }
 
   //surface.setSize(neww, newh);
   surface.setLocation(0, 0);
@@ -85,13 +76,12 @@ void setup() {
   exporter.setPath(appName);
   exporter.setLimit(1);
   
-  processImage();
+  //processImage();
+  background(0);
 }
 
 void draw() {
-  if(done) {
-    image(buffer, 0, 0, width, height);
-    processImage();
-    if(record) exporter.export(buffer);
-  }  
+  processImage();
+  image(buffer, 0, 0, width, height);
+  if(record) exporter.export(buffer);
 }

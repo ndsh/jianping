@@ -2,7 +2,10 @@ void keyPressed() {
   // SPACE to save
   if(keyCode == 32) {
     save();
-  }
+  } else if (key == 'r') {
+      record = !record;
+      println("record= " + record);
+    }
 }
 
 void processImage() {
@@ -10,12 +13,12 @@ void processImage() {
   parts = new HashMap<String, ArrayList<Part>>();
   buffer.beginDraw();
 
-  println("Preparing data");
+  //println("Preparing data");
   prepare_image();
   prepare_patterns();
   segment(0, img.width-1, 0, img.height-1, 2);
 
-  println("Layering");
+  //println("Layering");
   for (String key : parts.keySet ()) {
     ArrayList<Part> p = parts.get(key);
     PImage _img = loadImage(key);
@@ -25,7 +28,7 @@ void processImage() {
     }
   }
 
-  println("done");
+  //println("done");
   done = true;
   // END CODE HERE!
 
@@ -33,7 +36,7 @@ void processImage() {
     buffer.blend(img,0,0,img.width,img.height,0,0,buffer.width,buffer.height,blend_mode);
 
   buffer.endDraw();
-  image(buffer,0,0,width,height);
+  //image(buffer,0,0,width,height);
 }
 
 
