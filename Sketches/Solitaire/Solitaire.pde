@@ -7,6 +7,7 @@ Exporter exporter;
 ArrayList<PImage> img = new ArrayList<PImage>();
 ArrayList<Mover> movers = new ArrayList<Mover>();
 PImage marke;
+PImage p = null;
 
 String appName = "solitaire";
 
@@ -21,6 +22,10 @@ long interval = 20;
 int stepDebounce = 20;
 int globalSteps = 0;
 
+boolean loadAllAssets = false;
+boolean useSize = false;
+boolean run = true;
+boolean hideGui = false;
 boolean view = false;
 boolean firstRun = true;
 boolean stateMachineFirstCycle = true;
@@ -29,7 +34,9 @@ boolean redrawBackground = true;
 boolean rotateTiles = false;
 boolean fadeBackground = false;
 boolean globalStep = false;
+boolean direction = false;
 int imageDraw = CENTER;
+
 
 /* * * * * * * * * * * * * 
   TODO
@@ -38,8 +45,10 @@ int imageDraw = CENTER;
 */
 
 void setup() {
-  //size(3200, 1000);
-  size(1600, 500);
+  size(3200, 1000);
+  
+  // MBP Resolution
+  //size(1600, 500);
   colorMode(HSB, 360, 100, 100);
   
   if(imageDraw == CENTER) imageMode(CENTER);
@@ -48,7 +57,7 @@ void setup() {
   
   importer = new Importer("../../Assets");
   if(importer.getFolders().size() > 0) {
-    importer.loadFiles(importer.getFolders().get(1));
+    importer.loadFiles(importer.getFolders().get(0));
   }
   
   exporter = new Exporter(FPS);
@@ -56,12 +65,14 @@ void setup() {
 
   initCP5(this);
   redrawBGCheckbox(n);
+  hideGui(0);
   stateMachine = INIT;
   surface.setLocation(0, 0);
 }
 
 
 void draw() {
+  if(!run) return;
   stateMachine(stateMachine);
   // to do
   

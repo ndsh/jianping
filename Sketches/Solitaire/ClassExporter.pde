@@ -51,7 +51,6 @@ class Exporter {
     noFill();
     rect(0,0,width-1,height-1);
     pop();
-    
   }
   
   void setPath(String s) {

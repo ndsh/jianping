@@ -17,7 +17,8 @@ class Mover {
     
     p = 0;
     offset = 0;
-    size = 20+(origin.x/4);
+    //size = 20+(origin.x/4);
+    size = (int)map(origin.x, 0, width,  60, 200);
     
   }
 
@@ -30,9 +31,9 @@ class Mover {
     translate(origin.x, origin.y);
     imageMode(CENTER);
     if(rotateTiles) rotate(rotation);
-    image(img.get((p+offset) % nPics), 0, 0);
-    // mit resize
-    //image(img.get((p+offset) % nPics), 0, 0, size, size);
+    if(!useSize) image(img.get((p+offset) % nPics), 0, 0);
+    else image(img.get((p+offset) % nPics), 0, 0, size, size); // mit resize
+    
     pop();
   }
   
@@ -46,10 +47,11 @@ class Mover {
   void step() {
     if(millis() - timestamp > stepDebounce) {
       timestamp = millis();
-      //p = (p+1) % nPics;
-      p += 1;
-      p %= nPics;
+      p = (p+1) % nPics;
+      //p += 1;
+      //p %= nPics;
       offset = 0;
+      
     }
   }
   

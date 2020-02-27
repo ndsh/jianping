@@ -4,12 +4,12 @@ static final int LINEAR = 1;
 static final int FOLLOW = 2;
 static final int ROWS = 3;
 static final int ZIGZAG = 4;
-static final int WAVE = 5;
+static final int SIZE = 5;
 static final int AUTOMATA = 6;
 static final int SNAKE = 7;
 static final int GAUSSIAN = 8;
 
-int maxStates = 3;
+int maxStates = 6;
 
 ////////// STATE VARIABLES
 
@@ -17,6 +17,16 @@ int maxStates = 3;
 PGraphics pg;
 int xAxis = 0;
 int yAxis = 0;
+
+static final String[] stateNames = {
+  "Standard", "Linear", "Follow",
+  "Rows", "Zigzag", "Size",
+  "Automata", "Snake", "Gaussian"
+};
+
+String getStateName(int state) {
+  return stateNames[state];
+}
 
 
 void stateMachine(int state) {
@@ -79,20 +89,14 @@ void stateMachine(int state) {
         stateMachineFirstCycle = false;
         addMover(width/2, height/2);
         exporter.setPath(appName +"-follow");
+        stepDebounce = 200;
       }
-      
-      //PImage p = movers.get(0).getImage();
-      //PImage p = movers.get(0).getImage();
-      
+      p = movers.get(0).getImage();
       pg.beginDraw();
       pg.imageMode(CENTER);
-      //pg.translate(pg.width/2 - 70, pg.height/2);
-      
-      pg.image(movers.get(0).getImage(), width/2, mouseY);
-      //pg.image(
-      //p = pg.get();
-      pg.image(pg.get(), width/2 - 70, height/2);
-      
+      pg.image(p, pg.width/2, mouseY);
+      //println(movers.get(0).getImage().width);
+      pg.image(pg.get(), pg.width/2 - p.width, pg.height/2);
       pg.endDraw();
       
       push();
@@ -101,15 +105,98 @@ void stateMachine(int state) {
       image(pg, 0, 0);
       pop();
       
+      movers.get(0).step();
+    break;
+    
+    case ROWS:
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        addMover(width/2, height/2);
+        exporter.setPath(appName +"-rows");
+        stepDebounce = 200;
+      }
       
-      //if(xAxis < 0) xAxis = pg.width;
+      pg.beginDraw();
+      pg.imageMode(CENTER);
+      for(int y = 0; y<height; y++) {
+        pg.image(movers.get(0).getImage(), width, y*pg.height/movers.get(0).getImage().height);
+        movers.get(0).step();
+      }
       
-      //println(xAxis);
-     // xAxis %= width;
-      //movers.get(0).display();
+      pg.image(pg.get(), width/2 - movers.get(0).getImage().width, height/2);
+      pg.endDraw();
+      
+      push();
+      translate(width/2, height/2);
+      imageMode(CENTER);
+      image(pg, 0, 0);
+      pop();
+      
+     // movers.get(0).step();
+    break;
+    
+    case ZIGZAG:
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        addMover(width/2, height/2);
+        exporter.setPath(appName +"-zigzag");
+        stepDebounce = 200;
+      }
+      p = movers.get(0).getImage();
+      
+      pg.beginDraw();
+      
+      pg.imageMode(CENTER);
+      pg.image(p, width, yAxis);
+      pg.image(pg.get(), pg.width/2 - p.width, pg.height/2);
+      pg.endDraw();
+      
+      push();
+      translate(width/2, height/2);
+      imageMode(CENTER);
+      image(pg, 0, 0);
+      pop();
+      
+      if(direction) yAxis += p.height;
+      else yAxis -= p.height;
+      
+      if(yAxis < 0) direction = true;
+      else if(yAxis >= height) direction = false;
       movers.get(0).step();
       
+      
+    break;
     
+    case SIZE:
+      if(stateMachineFirstCycle) {
+        exporter.setPath(appName +"-size");
+        stateMachineFirstCycle = false;
+        useSize = true;
+      }
+      
+      for (Mover mv : movers) {
+        mv.update();
+        mv.display();
+      }
+    
+      /* segmente in strecken abfahren 
+       int start = 0;
+       int end = 50;
+       if(movers.size() > end) {
+         for (int i = start; i<start+end; i++) {
+           movers.get(i).display();
+         }
+       }
+      */
+      if(!record) {
+        fill(255, 125);
+        noStroke();
+        pushMatrix();
+        //translate(mouseX, mouseY);
+        ellipse(mouseX, mouseY, 10, 10);
+        //rect(0, 0, 10, 10);
+        popMatrix();
+      }
     break;
     
 

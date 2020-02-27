@@ -1,3 +1,6 @@
+Textlabel frameRateLabel;
+Textlabel stateTitle;
+Textlabel stateLabel;
 CheckBox rotateTilesCheckbox;
 CheckBox imageDrawCheckbox;
 CheckBox filterCheckbox;
@@ -5,6 +8,9 @@ CheckBox presentationModeCheckbox;
 CheckBox redrawBGCheckbox;
 CheckBox fadeCheckbox;
 CheckBox globalStepCheckbox;
+
+float[] y = {1f};
+float[] n = {0f};
   
 void initCP5(PApplet pa) {
   cp5 = new ControlP5(pa);
@@ -61,7 +67,7 @@ void initCP5(PApplet pa) {
    globalStepCheckbox = cp5.addCheckBox("globalStepCheckbox")
     .setPosition(150, 50)
     .setSize(32, 8)
-    .addItem("fade", 1)
+    .addItem("globalStep", 1)
     ;
     
   
@@ -84,12 +90,29 @@ void initCP5(PApplet pa) {
    .setPosition(420,20)
    .setSize(60,10)
    ;
+  cp5.addButton("hideGui")
+   .setValue(0)
+   .setLabel("Hide GUI")
+   .setPosition(420,30)
+   .setSize(60,10)
+   ;
+  
+  stateTitle = cp5.addTextlabel("label1")
+    .setText("Current state: ")
+    .setPosition(0, 80)
+    ;
+  stateLabel = cp5.addTextlabel("label2")
+    .setText("A single ControlP5 textlabel")
+    .setPosition(60, 80)
+    .setColorValue(0xffff00ff)
+    ;
+  frameRateLabel = cp5.addTextlabel("label3")
+    .setText("frameRate")
+    .setPosition(0, 90)
+    ;
    
   
 }
-
-float[] y = {1f};
-float[] n = {0f};
 
 public void nextState(int theValue) {
   println("nextState");
@@ -110,6 +133,11 @@ public void prevState(int theValue) {
 public void clearMovers(int theValue) {
   movers.clear();
   println("cleared all movers");
+}
+
+public void hideGui(int theValue) {
+  hideGui = !hideGui;
+  println("hideGui= " + hideGui);
 }
 
 

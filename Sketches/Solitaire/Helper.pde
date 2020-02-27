@@ -1,9 +1,11 @@
 void mouseDragged() {
-  if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  if(hideGui) addMover();
+  else if(mouseY > 100 && stateMachine == STANDARD) addMover();
 }
 
 void mousePressed() {
-  if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  if(hideGui) addMover();
+  else if(mouseY > 100 && stateMachine == STANDARD) addMover();
 }
 
 void keyPressed() {
@@ -11,10 +13,16 @@ void keyPressed() {
   } else if (key == 'r' || key == 'R' ) {
     record = !record;
     println("record= " + record);
+  } else if (key == 'h' || key == 'H' ) {
+    hideGui = !hideGui;
+    println("hideGui= " + hideGui);
   } else if (keyCode == RIGHT) {
     nextState(0);
   } else if (keyCode == LEFT) {
     prevState(0);
+  } else if (keyCode == ' ') {
+    run = !run;
+    println("run= "+ run);
   }
 }
 
@@ -23,10 +31,24 @@ void init() {
   if(firstRun) {
     firstRun = false;
     println("Adding movers...");
-    for (int i = 0; i <importer.getFiles().size(); i++) {
-      //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
-      //PImage temp = loadImage(importer.getFiles().get(i));
-      img.add(loadImage(importer.getFiles().get(i)));
+    if(!loadAllAssets) {
+      // STANDARD METHODE MIT EINEM SATZ
+      for (int i = 0; i <importer.getFiles().size(); i++) {
+        //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
+        //PImage temp = loadImage(importer.getFiles().get(i));
+        img.add(loadImage(importer.getFiles().get(i)));
+      }
+    } else {
+      // ERWEITERTE METHODE MIT n-vielen DATENSÄTZEN
+      // importer.getFolders().size()
+      for (int j = 0; j <2; j++) {
+        importer.loadFiles(importer.getFolders().get(j));
+        for (int i = 0; i <importer.getFiles().size(); i++) {
+          //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
+          //PImage temp = loadImage(importer.getFiles().get(i));
+          img.add(loadImage(importer.getFiles().get(i)));
+        }
+      }
     }
     
     println("Normalizing images");
@@ -64,6 +86,9 @@ void clearStates() {
   xAxis = 0;
   yAxis = 0;
   stateMachineFirstCycle = true;
+  direction = false;
+  p = null;
+  useSize = false;
 }
 
 
@@ -84,18 +109,22 @@ PImage getNormalizedImage(PImage p) {
 }
 
 void drawGUI() {
+  if(stateMachine == INIT) stateLabel.setText("Initializing");
+  else if (!(stateLabel.getStringValue().equals(getStateName(stateMachine)))) stateLabel.setText(getStateName(stateMachine));
+  frameRateLabel.setText("Framerate: "+ frameRate);
+  if(!hideGui) {
+    pushStyle();
+    fill(30);
+    noStroke();
+    rect(0, 0, width, 100);
+    fill(0, 100, 100);
+    line(0,220,width,220);
+    popStyle();
   
-  pushStyle();
-  fill(30);
-  noStroke();
-  rect(0, 0, width, 100);
-  fill(0, 100, 100);
-  line(0,220,width,220);
-  popStyle();
+    imageMode(CORNER);
+    image(marke, width-135, 85); 
   
-  imageMode(CORNER);
-  image(marke, width-135, 85); 
-  
-  cp5.draw();
+    cp5.draw();
+  }
   
 }
