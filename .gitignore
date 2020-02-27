@@ -5,3 +5,6 @@ Sketches/getDominantHSBComponents/data
 Assets/jianping-*
 /Exports
 build-tmp
+*/watmap
+Sketches/watmap_*
+/Sketches/Quadtree/assets
