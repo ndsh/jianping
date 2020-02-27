@@ -1,5 +1,5 @@
 Exporter exporter;
-String appName = "exporter";
+String appName = "exporter-app";
 int FPS = 30;
 
 void setup() {
