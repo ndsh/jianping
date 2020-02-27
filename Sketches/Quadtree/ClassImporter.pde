@@ -15,10 +15,6 @@ class Importer {
     for(int i = 0; i<folders.size(); i++) {
       println("\t["+ i +"] " + folders.get(i));
     }
-    
-    if (getFolders().size() > 0) {
-      loadFiles(getFolders().get(0));
-    }
   }
 
   void loadFolders() {
