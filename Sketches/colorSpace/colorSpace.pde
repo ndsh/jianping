@@ -34,6 +34,7 @@ float scaleImages = 1;
 
 boolean firstRun = true;
 boolean isRunnable = false;
+boolean hideGui = false;
 boolean record = false;
 boolean center = true;
 boolean rotate = false;
@@ -61,9 +62,14 @@ void setup() {
   initRanges();
   
   importer = new Importer("../../Assets");
+  if(importer.getFolders().size() > 0) {
+    importer.loadFiles(importer.getFolders().get(1));
+  }
   
   exporter = new Exporter(FPS);
   exporter.setPath(appName);
+  
+  redrawBGCheckbox(y);
   
 }
 

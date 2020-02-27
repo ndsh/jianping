@@ -9,6 +9,9 @@ Range range0;
 Range range1;
 Range range2;
 
+float[] y = {1f};
+float[] n = {0f};
+
   
 void initCP5(PApplet pa) {
   cp5 = new ControlP5(pa);
@@ -147,7 +150,12 @@ void initCP5(PApplet pa) {
    .setPosition(420,20)
    .setSize(60,10)
    ;
-
+  cp5.addButton("hideGui")
+   .setValue(0)
+   .setLabel("Hide GUI")
+   .setPosition(420,30)
+   .setSize(60,10)
+   ;
    
 }
 
@@ -164,6 +172,10 @@ public void linearCycle(int theValue) {
 public void linearDrag(int theValue) {
   println("linearDrag");
   linearCycleMode = 2;
+}
+public void hideGui(int theValue) {
+  hideGui = !hideGui;
+  println("hideGui= " + hideGui);
 }
 
 void modeCheckbox(float[] a) {

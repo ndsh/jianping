@@ -12,9 +12,10 @@ class Importer {
     // but you can list any directory you like.
     path = sketchPath(_root);
     loadFolders();
-    if (getFolders().size() > 0) {
-      loadFiles(getFolders().get(0));
+    for(int i = 0; i<folders.size(); i++) {
+      println("\t["+ i +"] " + folders.get(i));
     }
+    
   }
 
   void loadFolders() {

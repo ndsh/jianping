@@ -14,7 +14,7 @@ class ColorNode {
     p = loadImage(s);
     filename = s;
     assertDominance();
-    println("New node created with dominant values ( "+ dominant[0] + " / " + dominant[1] + " / " + dominant[2] + " ) from file:" + s);
+    //println("New node created with dominant values ( "+ dominant[0] + " / " + dominant[1] + " / " + dominant[2] + " ) from file:" + s);
   }
   
   void assertDominance() {

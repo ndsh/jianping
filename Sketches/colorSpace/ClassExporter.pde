@@ -45,13 +45,16 @@ class Exporter {
     }
     
     // show the record frame
+    /*
+    if(cam != null) cam.beginHUD();
     push();
     stroke(0,100,100);
     strokeWeight(2);
     noFill();
     rect(0,0,width-1,height-1);
     pop();
-    
+    if(cam != null) cam.endHUD();
+    */
   }
   
   void setPath(String s) {

@@ -12,14 +12,25 @@ void keyPressed() {
       println("Quitting sketch");
       exit();
       
+    } else if (key == 'h' || key == 'H' ) {
+      hideGui = !hideGui;
+      println("hideGui= " + hideGui);
+    } else if (key == 'd' || key == 'D' ) {
+      redrawBackground = !redrawBackground;
+      println("redrawBackground= " + redrawBackground);
     }
+    
 }
 
 void init() {
   if(firstRun) {
     firstRun = false;
     println("Adding nodes and calculating weights...");
+    
+    
     if(importer.getFiles().size() > 0) {
+      // STANDARD
+      
       for(int i = 0; i<importer.getFiles().size(); i++) {
         //print("i="+ i +" => ");
         //nodes.add(new ColorNode("svg/i_"+i+".jpg", mode));
@@ -28,6 +39,24 @@ void init() {
         ;
         //nodes.add(new ColorNode("1.jpg", 1));
       }
+      
+      
+      
+      // ALL
+      /*
+      for (int j = 0; j <10; j++) {
+        if(j == 2 || j == 6 || j == 1 || j == 7 || j == 8 || j == 9) { ; 
+        } else {
+          importer.loadFiles(importer.getFolders().get(j));
+          for (int i = 0; i <importer.getFiles().size(); i++) {
+            //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
+            //PImage temp = loadImage(importer.getFiles().get(i));
+            nodes.add(new ColorNode(importer.getFiles().get(i)));
+          }
+        }
+        
+      } //
+    */
       
       println("done!");
       isRunnable = true;
@@ -70,18 +99,20 @@ void drawCenter() {
 }
 
 void drawGUI() {
-  cam.beginHUD();
-  pushStyle();
-  fill(0);
-  noStroke();
-  rect(0, 0, width, 100);
-  popStyle();
-  
-  image(marke, width-135, 85);
-  fill(color( (componentMax[0]-componentMin[0])/2, (componentMax[1]-componentMin[1])/2, (componentMax[2]-componentMin[2])/2)); 
-  rect(250, 30, 100, 40);
-  cp5.draw();
-  cam.endHUD();
+  if(!hideGui) {
+    cam.beginHUD();
+    pushStyle();
+    fill(0);
+    noStroke();
+    rect(0, 0, width, 100);
+    popStyle();
+    
+    image(marke, width-135, 85);
+    fill(color( (componentMax[0]-componentMin[0])/2, (componentMax[1]-componentMin[1])/2, (componentMax[2]-componentMin[2])/2)); 
+    rect(250, 30, 100, 40);
+    cp5.draw();
+    cam.endHUD();
+  }
 }
 
 void drawNodes() {
