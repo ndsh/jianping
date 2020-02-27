@@ -85,7 +85,11 @@ void initCP5(PApplet pa) {
    .setSize(60,10)
    ;
    
+  
 }
+
+float[] y = {1f};
+float[] n = {0f};
 
 public void nextState(int theValue) {
   println("nextState");
@@ -117,6 +121,8 @@ void rotateTilesCheckbox(float[] a) {
 void redrawBGCheckbox(float[] a) {
   if (a[0] == 1f) redrawBackground = true;
   else redrawBackground = false;
+  
+  println("redrawBackground= "+ redrawBackground);
 }
 void fadeCheckbox(float[] a) {
   if (a[0] == 1f) fadeBackground = true;

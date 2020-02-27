@@ -11,6 +11,10 @@ void keyPressed() {
   } else if (key == 'r' || key == 'R' ) {
     record = !record;
     println("record= " + record);
+  } else if (keyCode == RIGHT) {
+    nextState(0);
+  } else if (keyCode == LEFT) {
+    prevState(0);
   }
 }
 
@@ -54,11 +58,12 @@ void clearStates() {
   println("switching to state= "+ stateMachine);
   pg = createGraphics(width, height);
   pg.beginDraw();
-  pg.background(0);
+  //pg.background(125, 50, 100);
   pg.imageMode(CENTER);
   pg.endDraw();
   xAxis = 0;
   yAxis = 0;
+  stateMachineFirstCycle = true;
 }
 
 

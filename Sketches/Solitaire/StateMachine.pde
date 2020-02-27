@@ -29,7 +29,10 @@ void stateMachine(int state) {
     break;
     
     case STANDARD:
-      exporter.setPath(appName +"-standard");
+      if(stateMachineFirstCycle) {
+        exporter.setPath(appName +"-standard");
+        stateMachineFirstCycle = false;
+      }
       
       for (Mover mv : movers) {
         mv.update();
@@ -57,7 +60,10 @@ void stateMachine(int state) {
     break;
     
     case LINEAR:
-      exporter.setPath(appName +"-linear");
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        exporter.setPath(appName +"-linear");
+      }
     
       if(xAxis <= width) addMover(xAxis, height/2);
       for (Mover mv : movers) {
@@ -69,59 +75,56 @@ void stateMachine(int state) {
     break;
     
     case FOLLOW:
-      exporter.setPath(appName +"-follow");
-    
-      pg.beginDraw();
-      //if(redrawBackground) pg.background(0);
-      //pg.background(0);
-      
-      //if(xAxis <= width)
-      //if(movers.size() < 100)
-      
-      
-      if(movers.size() > 5) {
-       //for (int i = 0; i<movers.size(); i += 2) movers.remove(i);
-       movers.remove(movers.size()-1);
-     }
-     
-      addMover(width/2, height/2);
-      
-      //mv.step();
-      
-      for (Mover mv : movers) {
-        //mv.update();
-        PVector position = mv.getPosition();
-        mv.setPosition((int)position.x + normalizedBorders[1], (int)position.y);
-        
-        
-        //mv.display();
-        PImage p = mv.getImage();
-        pg.push();
-        pg.translate(mv.getPosition().x, mv.getPosition().y);
-        pg.image(p, 0, 0);
-        pg.pop();
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        addMover(width/2, height/2);
+        exporter.setPath(appName +"-follow");
       }
+      
+      //PImage p = movers.get(0).getImage();
+      //PImage p = movers.get(0).getImage();
+      
+      pg.beginDraw();
+      pg.imageMode(CENTER);
+      //pg.translate(pg.width/2 - 70, pg.height/2);
+      
+      pg.image(movers.get(0).getImage(), width/2, mouseY);
+      //pg.image(
+      //p = pg.get();
+      pg.image(pg.get(), width/2 - 70, height/2);
+      
       pg.endDraw();
       
-      //if(xAxis <= width)
-      //xAxis += normalizedBorders[1];
-      
       push();
-      imageMode(CORNER);
+      translate(width/2, height/2);
+      imageMode(CENTER);
       image(pg, 0, 0);
       pop();
-     
-     println("movers=" + movers.size());
+      
+      
+      //if(xAxis < 0) xAxis = pg.width;
+      
+      //println(xAxis);
+     // xAxis %= width;
+      //movers.get(0).display();
+      movers.get(0).step();
+      
     
     break;
     
 
     case AUTOMATA:
-      exporter.setPath(appName +"-automata");
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        exporter.setPath(appName +"-automata");
+      }
     break;
     
     case SNAKE:
-      exporter.setPath(appName +"-snake");
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        exporter.setPath(appName +"-snake");
+      }
     break;
     
     

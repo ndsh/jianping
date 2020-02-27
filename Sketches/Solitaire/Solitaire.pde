@@ -12,7 +12,7 @@ String appName = "solitaire";
 
 int stateMachine = INIT;
 int FPS = 30;
-int[] normalizedBorders = {40, 300};
+int[] normalizedBorders = {40, 70};
 int count = 0;
 int nPics = 150;
 
@@ -23,6 +23,7 @@ int globalSteps = 0;
 
 boolean view = false;
 boolean firstRun = true;
+boolean stateMachineFirstCycle = true;
 boolean record = false;
 boolean redrawBackground = true;
 boolean rotateTiles = false;
@@ -37,7 +38,8 @@ int imageDraw = CENTER;
 */
 
 void setup() {
-  size(3200, 1000);
+  //size(3200, 1000);
+  size(1600, 500);
   colorMode(HSB, 360, 100, 100);
   
   if(imageDraw == CENTER) imageMode(CENTER);
@@ -46,26 +48,23 @@ void setup() {
   
   importer = new Importer("../../Assets");
   if(importer.getFolders().size() > 0) {
-    importer.loadFiles(importer.getFolders().get(0));
+    importer.loadFiles(importer.getFolders().get(1));
   }
   
   exporter = new Exporter(FPS);
   exporter.setPath(appName);
 
   initCP5(this);
+  redrawBGCheckbox(n);
   stateMachine = INIT;
   surface.setLocation(0, 0);
 }
 
 
 void draw() {
-  if(fadeBackground) {
-    push();
-    fill(0, 0, 0, 125);
-    rect(0, 0, width, height);
-    pop();
-  }
   stateMachine(stateMachine);
+  // to do
+  
   if(record) exporter.export();
   drawGUI();
 }
