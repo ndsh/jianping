@@ -16,6 +16,9 @@ void keyPressed() {
   } else if (key == 'h' || key == 'H' ) {
     hideGui = !hideGui;
     println("hideGui= " + hideGui);
+  } else if (key == 'd' || key == 'D' ) {
+    redrawBackground = !redrawBackground;
+    println("redrawBackground= " + redrawBackground);
   } else if (keyCode == RIGHT) {
     nextState(0);
   } else if (keyCode == LEFT) {
@@ -89,6 +92,7 @@ void clearStates() {
   direction = false;
   p = null;
   useSize = false;
+  trailLength = 200;
 }
 
 

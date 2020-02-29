@@ -13,7 +13,9 @@ String appName = "solitaire";
 
 int stateMachine = INIT;
 int FPS = 30;
-int[] normalizedBorders = {40, 70};
+int[] normalizedBorders = {20, 30};
+ArrayList<PVector> mouseHistory = new ArrayList<PVector>();
+int trailLength = 200;
 int count = 0;
 int nPics = 150;
 
@@ -45,10 +47,10 @@ int imageDraw = CENTER;
 */
 
 void setup() {
-  size(3200, 1000);
+  //size(3200, 1000);
   
   // MBP Resolution
-  //size(1600, 500);
+  size(1600, 500);
   colorMode(HSB, 360, 100, 100);
   
   if(imageDraw == CENTER) imageMode(CENTER);
@@ -64,7 +66,7 @@ void setup() {
   exporter.setPath(appName);
 
   initCP5(this);
-  redrawBGCheckbox(n);
+  redrawBGCheckbox(y);
   hideGui(0);
   stateMachine = INIT;
   surface.setLocation(0, 0);

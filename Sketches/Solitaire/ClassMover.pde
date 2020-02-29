@@ -8,6 +8,8 @@ class Mover {
   long timestamp = 0;
   float size;
   
+  float opacity = 1;
+  
   
   Mover(PVector position) {
     origin = position.copy();
@@ -43,6 +45,10 @@ class Mover {
    
   void randomOffset() {
     p = (int)random(img.size()-1);
+  }
+  
+  void setOffset(int o) {
+    p = o;
   }
   void step() {
     if(millis() - timestamp > stepDebounce) {
