@@ -4,6 +4,7 @@ ControlP5 cp5;
 Importer importer;
 Exporter exporter;
 
+ArrayList<PImage> original_img = new ArrayList<PImage>();
 ArrayList<PImage> img = new ArrayList<PImage>();
 ArrayList<Mover> movers = new ArrayList<Mover>();
 PImage marke;
@@ -47,10 +48,10 @@ int imageDraw = CENTER;
 */
 
 void setup() {
-  //size(3200, 1000);
+  size(3200, 1000);
   
   // MBP Resolution
-  size(1600, 500);
+  //size(1600, 500);
   colorMode(HSB, 360, 100, 100);
   
   if(imageDraw == CENTER) imageMode(CENTER);

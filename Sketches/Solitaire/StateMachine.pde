@@ -8,10 +8,11 @@ static final int ROWS = 5;
 static final int WAVE = 6;
 static final int ZIGZAG = 7;
 static final int SINE = 8;
-static final int SIZE = 9;
-static final int AUTOMATA = 10;
-static final int SNAKE = 11;
-static final int GAUSSIAN = 12;
+static final int SINE_SIZE = 9;
+static final int SIZE = 10;
+static final int AUTOMATA = 11;
+static final int SNAKE = 12;
+static final int GAUSSIAN = 13;
 
 int maxStates = 10;
 
@@ -25,8 +26,8 @@ float inc = 0;
 
 static final String[] stateNames = {
   "Standard", "Linear", "Follow",
-  "Turning", "Smear", "Rows", "Wave", "Zigzag", "Sine", "Size",
-  "Automata", "Snake", "Gaussian"
+  "Turning", "Smear", "Rows", "Wave", "Zigzag", "Sine", "Sine Size",
+  "Size", "Automata", "Snake", "Gaussian"
 };
 
 String getStateName(int state) {
@@ -92,6 +93,7 @@ void stateMachine(int state) {
     case FOLLOW:
       if(stateMachineFirstCycle) {
         stateMachineFirstCycle = false;
+        trailLength = 50;
         int half = width/trailLength;
         for(int i = 0; i<trailLength; i++) {
           movers.add(new Mover(new PVector(half*i, height/2)));
@@ -109,7 +111,7 @@ void stateMachine(int state) {
       for(int i = 0; i<mouseHistory.size(); i++) {
         Mover m = movers.get(i);
         PVector p = m.getPosition();
-        m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+        m.setPosition((int)mouseHistory.get(i).x, (int)mouseHistory.get(i).y);
         m.step();
         m.display();
       }     
@@ -265,6 +267,9 @@ void stateMachine(int state) {
     case SINE:
       //https://processing.org/examples/sinewave.html
       // todo
+      // mit größen mappen
+      // weitere kurven
+      // redraw an/aus
       if(stateMachineFirstCycle) {
         stateMachineFirstCycle = false;
         int half = width/trailLength;
@@ -274,6 +279,41 @@ void stateMachine(int state) {
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
         
         exporter.setPath(appName +"-sine");
+        
+      }
+      
+      mouseHistory.add(new PVector(0, height/2-sin(inc)*500));
+      inc += 0.01;
+      if(mouseHistory.size() > trailLength) mouseHistory.remove(0);
+      
+      for(int i = 0; i<mouseHistory.size(); i++) {
+        Mover m = movers.get(i);
+        PVector p = m.getPosition();
+        m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+        m.step();
+        m.display();
+      }
+      p = movers.get(0).getImage();
+      
+      
+    break;
+    
+    case SINE_SIZE:
+      //https://processing.org/examples/sinewave.html
+      // todo
+      // mit größen mappen
+      // weitere kurven
+      // redraw an/aus
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        int half = width/trailLength;
+        for(int i = 0; i<trailLength; i++) {
+          movers.add(new Mover(new PVector(half*i, height/2)));
+        } 
+        for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
+        
+        exporter.setPath(appName +"-sine-size");
+        useSize = true;
         
       }
       

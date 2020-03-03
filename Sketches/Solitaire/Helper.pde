@@ -40,6 +40,7 @@ void init() {
         //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
         //PImage temp = loadImage(importer.getFiles().get(i));
         img.add(loadImage(importer.getFiles().get(i)));
+        original_img.add(loadImage(importer.getFiles().get(i)));
       }
     } else {
       // ERWEITERTE METHODE MIT n-vielen DATENSÄTZEN
@@ -50,6 +51,7 @@ void init() {
           //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
           //PImage temp = loadImage(importer.getFiles().get(i));
           img.add(loadImage(importer.getFiles().get(i)));
+          original_img.add(loadImage(importer.getFiles().get(i)));
         }
       }
     }

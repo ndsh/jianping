@@ -34,7 +34,11 @@ class Mover {
     imageMode(CENTER);
     if(rotateTiles) rotate(rotation);
     if(!useSize) image(img.get((p+offset) % nPics), 0, 0);
-    else image(img.get((p+offset) % nPics), 0, 0, size, size); // mit resize
+    else {
+      PImage a = original_img.get(p % nPics);
+      a.resize((int)size, (int)size);
+      image(a, 0, 0); // mit resize
+    }
     
     pop();
   }
