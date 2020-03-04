@@ -93,8 +93,23 @@ void clearStates() {
   stateMachineFirstCycle = true;
   direction = false;
   p = null;
-  useSize = false;
+  trailLength = 100;
+  timestamp = millis();
+  comingFromTransition = false;
+}
+
+void transitionStates() {
+  println("switching to state= "+ stateMachine);
+  stateMachineFirstCycle = true;
   trailLength = 200;
+  comingFromTransition = true;
+  timestamp = millis();
+}
+
+void setState(int theState) {
+  println("previousState");
+  stateMachine = theState;
+  println("stateMachine= "+ stateMachine);
 }
 
 

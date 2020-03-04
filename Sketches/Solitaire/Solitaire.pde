@@ -19,6 +19,7 @@ ArrayList<PVector> mouseHistory = new ArrayList<PVector>();
 int trailLength = 200;
 int count = 0;
 int nPics = 150;
+int stateDuration = 0;
 
 long timestamp = 0;
 long interval = 20;
@@ -26,7 +27,7 @@ int stepDebounce = 20;
 int globalSteps = 0;
 
 boolean loadAllAssets = false;
-boolean useSize = false;
+boolean comingFromTransition = false;
 boolean run = true;
 boolean hideGui = false;
 boolean view = false;
@@ -48,10 +49,9 @@ int imageDraw = CENTER;
 */
 
 void setup() {
-  size(3200, 1000);
-  
+  //size(3200, 1000);
   // MBP Resolution
-  //size(1600, 500);
+  size(1600, 500);
   colorMode(HSB, 360, 100, 100);
   
   if(imageDraw == CENTER) imageMode(CENTER);
@@ -60,7 +60,7 @@ void setup() {
   
   importer = new Importer("../../Assets");
   if(importer.getFolders().size() > 0) {
-    importer.loadFiles(importer.getFolders().get(0));
+    importer.loadFiles(importer.getFolders().get(1));
   }
   
   exporter = new Exporter(FPS);

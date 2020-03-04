@@ -279,7 +279,7 @@ void stateMachine(int state) {
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
         
         exporter.setPath(appName +"-sine");
-        
+        stateDuration = 5000;
       }
       
       mouseHistory.add(new PVector(0, height/2-sin(inc)*500));
@@ -295,6 +295,11 @@ void stateMachine(int state) {
       }
       p = movers.get(0).getImage();
       
+      if(millis() - timestamp > stateDuration) {
+        timestamp = millis();
+        //setState(SINE_SIZE);
+        //transitionStates();
+      }
       
     break;
     
@@ -305,30 +310,46 @@ void stateMachine(int state) {
       // weitere kurven
       // redraw an/aus
       if(stateMachineFirstCycle) {
+        println("comingFromTransition= "+ comingFromTransition);
         stateMachineFirstCycle = false;
-        int half = width/trailLength;
-        for(int i = 0; i<trailLength; i++) {
-          movers.add(new Mover(new PVector(half*i, height/2)));
-        } 
-        for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
-        
+        if(!comingFromTransition) {
+          int half = width/trailLength;
+          for(int i = 0; i<trailLength; i++) {
+            movers.add(new Mover(new PVector(half*i, height/2)));
+          } 
+          for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
+        }
         exporter.setPath(appName +"-sine-size");
-        useSize = true;
-        
       }
       
       mouseHistory.add(new PVector(0, height/2-sin(inc)*500));
+      
+      
       inc += 0.01;
-      if(mouseHistory.size() > trailLength) mouseHistory.remove(0);
+      if(mouseHistory.size() >= trailLength) mouseHistory.remove(0);
+      
+      for(int i = 0; i<mouseHistory.size(); i++) {
+        Mover m = movers.get(i);
+        float sizeCalc = map((int)mouseHistory.get(i).y, 1, height, 1, 150);
+        m.setSize(sizeCalc);
+      }
+      
+      // calculate all sizes
+      
+      println("movers #"+ mouseHistory.size());
       
       for(int i = 0; i<mouseHistory.size(); i++) {
         Mover m = movers.get(i);
         PVector p = m.getPosition();
         m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+        if((int)mouseHistory.get(i).y > 0 && (int)mouseHistory.get(i).y <= height) {
+        
+        }
+        
         m.step();
         m.display();
       }
-      p = movers.get(0).getImage();
+      //p = movers.get(0).getImage();
       
       
     break;
@@ -337,7 +358,6 @@ void stateMachine(int state) {
       if(stateMachineFirstCycle) {
         exporter.setPath(appName +"-size");
         stateMachineFirstCycle = false;
-        useSize = true;
       }
       
       for (Mover mv : movers) {

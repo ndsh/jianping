@@ -20,7 +20,8 @@ class Mover {
     p = 0;
     offset = 0;
     //size = 20+(origin.x/4);
-    size = (int)map(origin.x, 0, width,  60, 200);
+    //size = (int)map(origin.x, 0, width,  60, 200);
+    size = 0;
     
   }
 
@@ -33,12 +34,9 @@ class Mover {
     translate(origin.x, origin.y);
     imageMode(CENTER);
     if(rotateTiles) rotate(rotation);
-    if(!useSize) image(img.get((p+offset) % nPics), 0, 0);
-    else {
-      PImage a = original_img.get(p % nPics);
-      a.resize((int)size, (int)size);
-      image(a, 0, 0); // mit resize
-    }
+    //if(size == 0)
+    if(size == 0) image(img.get((p+offset) % nPics), 0, 0);
+    else image(img.get((p+offset) % nPics), 0, 0, 200, 200);
     
     pop();
   }
@@ -76,5 +74,9 @@ class Mover {
   
   PImage getImage() {
     return img.get((p+offset) % nPics);
+  }
+  
+  void setSize(float _size) {
+    size = _size;
   }
 }
