@@ -14,7 +14,7 @@ void processImage() {
   buffer.beginDraw();
 
   //println("Preparing data");
-  prepare_image();
+  
   prepare_patterns();
   segment(0, img.width-1, 0, img.height-1, 2);
 
@@ -22,6 +22,7 @@ void processImage() {
   for (String key : parts.keySet ()) {
     ArrayList<Part> p = parts.get(key);
     PImage _img = loadImage(key);
+    image(_img, 0, 0);
     //println("Parts from image: " + key);
     for (Part part : p) {
       buffer.image(_img.get(part.posx, part.posy, part.w, part.h), part.x, part.y);
@@ -103,9 +104,15 @@ void find_match(int posx, int posy, int w, int h) {
 
   for (int i=0; i<number_of_iterations; i++) {
     LImage _img = imgsb.get( (int)random(imgsb.size()) );
+    //LImage _img = imgsb.get( imgsb.size()-1 );
     for (int iter=0; iter<number_of_blocks; iter++) {
       int xx = (int)random(_img.w-w-1);
+      //int xx = (_img.w-w-1)/2;
+      //println(_img.w-w-1);
       int yy = (int)random(_img.h-h-1);
+      //int yy = (_img.h-h-1)/2;
+      //int xx = _img.w;
+      //int yy = _img.h;
 
       if(xx+w >= _img.w || yy+h >= _img.h) break;
 
@@ -158,8 +165,10 @@ void segment(int x1, int x2, int y1, int y2, int obl) {
   int diffx = x2-x1;
   int diffy = y2-y1;
   if ((obl>0) || (diffx>MINR && diffy>MINR && godeeper(x1, x2, y1, y2))) {
-    int midx = (int)random(diffx/2-diffx/4, diffx/2+diffx/4);
-    int midy = (int)random(diffy/2-diffy/4, diffy/2+diffy/4);
+    //int midx = (int)random(diffx/2-diffx/4, diffx/2+diffx/4);
+    //int midy = (int)random(diffy/2-diffy/4, diffy/2+diffy/4);
+    int midx = diffx/2-diffx/4;
+    int midy = diffy/2-diffy/4;
     segment(x1, x1+midx, y1, y1+midy, obl-1);
     segment(x1+midx+1, x2, y1, y1+midy, obl-1);
     segment(x1, x1+midx, y1+midy+1, y2, obl-1);

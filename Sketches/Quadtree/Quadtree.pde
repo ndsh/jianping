@@ -1,7 +1,7 @@
 PVector[][] imgb;
 
 String foldername = "targets/";
-String filename = "exhibitionTitle_widescreen_black";
+String filename = "exhibitionTitle_widescreen_black_square";
 String fileext = ".jpg";
 
 
@@ -16,7 +16,7 @@ boolean record = true;
 final static String pattern_prefix = "assets/printmarks/pm";
 final static String file_ext = ".png";
 final static int pattern_init = 0; // starting number
-final static int pattern_length = 99; // how many images from the set
+final static int pattern_length = 80; // how many images from the set
 final static int pattern_size = 2; // number of digits
 
 // choose method of mapping
@@ -24,6 +24,11 @@ int mode = ABS_MODE;  // list below AVG_MODE, ABS_MODE, DIST_MODE
 
 int THR = 20; // higher value bigger rectangles (1..200)
 int MINR = 4; // minimum block (4..200)
+
+/*
+int THR = 20; // higher value bigger rectangles (1..200)
+int MINR = 4; // minimum block (4..200)
+*/
 
 int number_of_iterations = 4; // more = more variety
 int number_of_blocks = 100; // more = more search tries
@@ -78,6 +83,8 @@ void setup() {
   
   //processImage();
   background(0);
+  prepare_image();
+  
 }
 
 void draw() {
