@@ -36,12 +36,20 @@ class GridPoint {
   }
   
   void subdivide(ArrayList<GridPoint> newPoints) {
-    float tW = tileWidth/2;
-    float tH = tileHeight/2;
+    int divideBy = 2;
+    float tW = tileWidth/divideBy;
+    float tH = tileHeight/divideBy;
+    for(int i = 0; i<divideBy; i++) {
+      for(int j = 0; j<divideBy; j++) {
+        newPoints.add( new GridPoint(x+(tW*i), y+(tH*j), tW, tH, img) );
+      }
+    }
+    /*
     newPoints.add( new GridPoint(x, y, tW, tH, img) );
     newPoints.add( new GridPoint(x+tH, y, tW, tH, img) );
     newPoints.add( new GridPoint(x, y+tW, tW, tH, img) );
     newPoints.add( new GridPoint(x+tH, y+tW, tW, tH, img) );
+    */
   }
   
   void plain() {
