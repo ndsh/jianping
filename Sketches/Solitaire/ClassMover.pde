@@ -10,8 +10,13 @@ class Mover {
   
   float opacity = 1;
   
+  int imageIndexInternal = 0;
   
-  Mover(PVector position) {
+  
+  Mover(PVector position, int index) {
+    imageIndexInternal = index;
+    
+    //println(imageList.get(imageIndexInternal).size());
     origin = position.copy();
     //brs = new Brush();
     rotation = 2*frameCount/360.0*TWO_PI;
@@ -21,7 +26,7 @@ class Mover {
     offset = 0;
     //size = 20+(origin.x/4);
     //size = (int)map(origin.x, 0, width,  60, 200);
-    size = 0;
+    size = normalizedBorders[0]/2;
     
   }
 
@@ -35,8 +40,10 @@ class Mover {
     imageMode(CENTER);
     if(rotateTiles) rotate(rotation);
     //if(size == 0)
-    if(size == 0) image(img.get((p+offset) % nPics), 0, 0);
-    else image(img.get((p+offset) % nPics), 0, 0, 200, 200);
+    //if(size == 0) image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0);
+    //else image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size, (int)size);
+    //image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, imageList.get(imageIndexInternal).get((p+offset)).width *scaleImages, imageList.get(imageIndexInternal).get((p+offset)).height*scaleImages);
+    image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size*scaleImages, (int)size*scaleImages);
     
     pop();
   }
@@ -46,7 +53,7 @@ class Mover {
   }
    
   void randomOffset() {
-    p = (int)random(img.size()-1);
+    p = (int)random(imageList.get(imageIndexInternal).size()-1);
   }
   
   void setOffset(int o) {
@@ -55,7 +62,7 @@ class Mover {
   void step() {
     if(millis() - timestamp > stepDebounce) {
       timestamp = millis();
-      p = (p+1) % nPics;
+      p = (p+1) % imageList.get(imageIndexInternal).size();
       //p += 1;
       //p %= nPics;
       offset = 0;
@@ -73,7 +80,7 @@ class Mover {
   }
   
   PImage getImage() {
-    return img.get((p+offset) % nPics);
+    return imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size());
   }
   
   void setSize(float _size) {

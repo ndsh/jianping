@@ -12,6 +12,7 @@ class Importer {
     // but you can list any directory you like.
     path = sketchPath(_root);
     loadFolders();
+    folders.sort();
     for(int i = 0; i<folders.size(); i++) {
       println("\t["+ i +"] " + folders.get(i));
     }
@@ -22,7 +23,7 @@ class Importer {
     println("\nListing info about all files in a directory: ");
     File[] files = listFiles(path);
     for (int i = 0; i < files.length; i++) {
-      File f = files[i];    
+      File f = files[i];
       if (f.isDirectory()) folders.append(f.getName());
     }
     println(folders.size() + " subfolder(s) found");
@@ -30,6 +31,7 @@ class Importer {
 
   void loadFiles(String folder) {
     println("\nListing info about all files in a directory and all subdirectories: ");
+    files = new StringList();
     ArrayList<File> allFiles = listFilesRecursive(path+"/"+folder);
 
     for (File f : allFiles) {

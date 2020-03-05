@@ -45,12 +45,16 @@ class Exporter {
     }
     
     // show the record frame
-    push();
-    stroke(0,100,100);
-    strokeWeight(2);
-    noFill();
-    rect(0,0,width-1,height-1);
-    pop();
+    /*
+    if(!redrawBackground) {
+      push();
+      stroke(0,100,100);
+      strokeWeight(2);
+      noFill();
+      rect(0,0,width-1,height-1);
+      pop();
+    }
+    */
   }
   
   void setPath(String s) {

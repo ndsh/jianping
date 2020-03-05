@@ -4,17 +4,17 @@ static final int LINEAR = 1;
 static final int FOLLOW = 2;
 static final int TURNING = 3;
 static final int SMEAR = 4;
-static final int ROWS = 5;
-static final int WAVE = 6;
-static final int ZIGZAG = 7;
-static final int SINE = 8;
-static final int SINE_SIZE = 9;
+static final int ZIGZAG = 5;
+static final int SINE = 6;
+static final int SINE_SIZE = 7;
+static final int SINE_MULTIPLE = 8;
+static final int SINE_MULTIPLE_SIZE = 9;
 static final int SIZE = 10;
 static final int AUTOMATA = 11;
 static final int SNAKE = 12;
 static final int GAUSSIAN = 13;
 
-int maxStates = 10;
+int maxStates = 11;
 
 ////////// STATE VARIABLES
 
@@ -26,8 +26,8 @@ float inc = 0;
 
 static final String[] stateNames = {
   "Standard", "Linear", "Follow",
-  "Turning", "Smear", "Rows", "Wave", "Zigzag", "Sine", "Sine Size",
-  "Size", "Automata", "Snake", "Gaussian"
+  "Turning", "Smear", "Zigzag", "Sine", "Sine Size", "Sine Multiple",
+  "Sine Multiple Size", "Size", "Automata", "Snake", "Gaussian"
 };
 
 String getStateName(int state) {
@@ -96,7 +96,7 @@ void stateMachine(int state) {
         trailLength = 50;
         int half = width/trailLength;
         for(int i = 0; i<trailLength; i++) {
-          movers.add(new Mover(new PVector(half*i, height/2)));
+          movers.add(new Mover(new PVector(half*i, height/2), imageIndex));
         } 
         println(movers.size());
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
@@ -123,7 +123,7 @@ void stateMachine(int state) {
         stateMachineFirstCycle = false;
         int half = width/trailLength;
         for(int i = 0; i<trailLength; i++) {
-          movers.add(new Mover(new PVector(half*i, height/2)));
+          movers.add(new Mover(new PVector(half*i, height/2), imageIndex));
         } 
         println(movers.size());
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
@@ -173,71 +173,13 @@ void stateMachine(int state) {
       movers.get(0).step();
     break;
     
-    case ROWS:
-      if(stateMachineFirstCycle) {
-        stateMachineFirstCycle = false;
-        addMover(width/2, height/2);
-        exporter.setPath(appName +"-rows");
-        
-      }
-      
-      pg.beginDraw();
-      pg.imageMode(CENTER);
-      for(int y = 0; y<height; y++) {
-        pg.image(movers.get(0).getImage(), width, y*pg.height/movers.get(0).getImage().height);
-        movers.get(0).step();
-      }
-      
-      pg.image(pg.get(), width/2 - movers.get(0).getImage().width, height/2);
-      pg.endDraw();
-      
-      push();
-      translate(width/2, height/2);
-      imageMode(CENTER);
-      image(pg, 0, 0);
-      pop();
-      
-     // movers.get(0).step();
-    break;
-    
-    case WAVE:
-      if(stateMachineFirstCycle) {
-        stateMachineFirstCycle = false;
-        addMover(width/2, height/2);
-        exporter.setPath(appName +"-wave");
-        
-      }
-      p = movers.get(0).getImage();
-      
-      pg.beginDraw();
-      
-      pg.imageMode(CENTER);
-      pg.image(p, width, yAxis);
-      pg.image(pg.get(), pg.width/2 - p.width, pg.height/2);
-      pg.endDraw();
-      
-      push();
-      translate(width/2, height/2);
-      imageMode(CENTER);
-      image(pg, 0, 0);
-      pop();
-      
-      if(direction) yAxis += p.height;
-      else yAxis -= p.height;
-      
-      if(yAxis < 0) direction = true;
-      else if(yAxis >= height) direction = false;
-      movers.get(0).step();
-      
-      
-    break;
-    
+       
     case ZIGZAG:
       if(stateMachineFirstCycle) {
         stateMachineFirstCycle = false;
         int half = width/trailLength;
         for(int i = 0; i<trailLength; i++) {
-          movers.add(new Mover(new PVector(half*i, height/2)));
+          movers.add(new Mover(new PVector(half*i, height/2), imageIndex));
         } 
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
         
@@ -249,11 +191,13 @@ void stateMachine(int state) {
       if(mouseHistory.size() > trailLength) mouseHistory.remove(0);
       
       for(int i = 0; i<mouseHistory.size(); i++) {
-        Mover m = movers.get(i);
-        PVector p = m.getPosition();
-        m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
-        m.step();
-        m.display();
+        if(i < movers.size()) {
+          Mover m = movers.get(i);
+          PVector p = m.getPosition();
+          m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+          m.step();
+          m.display();
+        }
       }
       p = movers.get(0).getImage();
       if(direction) yAxis += p.height;
@@ -274,7 +218,7 @@ void stateMachine(int state) {
         stateMachineFirstCycle = false;
         int half = width/trailLength;
         for(int i = 0; i<trailLength; i++) {
-          movers.add(new Mover(new PVector(half*i, height/2)));
+          movers.add(new Mover(new PVector(half*i, height/2), imageIndex));
         } 
         for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
         
@@ -287,13 +231,15 @@ void stateMachine(int state) {
       if(mouseHistory.size() > trailLength) mouseHistory.remove(0);
       
       for(int i = 0; i<mouseHistory.size(); i++) {
-        Mover m = movers.get(i);
-        PVector p = m.getPosition();
-        m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
-        m.step();
-        m.display();
+        if(i < movers.size()) {
+          Mover m = movers.get(i);
+          PVector p = m.getPosition();
+          m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+          m.step();
+          m.display();
+        }
       }
-      p = movers.get(0).getImage();
+      
       
       if(millis() - timestamp > stateDuration) {
         timestamp = millis();
@@ -315,7 +261,7 @@ void stateMachine(int state) {
         if(!comingFromTransition) {
           int half = width/trailLength;
           for(int i = 0; i<trailLength; i++) {
-            movers.add(new Mover(new PVector(half*i, height/2)));
+            movers.add(new Mover(new PVector(half*i, height/2), imageIndex));
           } 
           for(int i = 0; i<trailLength; i++) movers.get(i).setOffset(i);
         }
@@ -329,28 +275,149 @@ void stateMachine(int state) {
       if(mouseHistory.size() >= trailLength) mouseHistory.remove(0);
       
       for(int i = 0; i<mouseHistory.size(); i++) {
-        Mover m = movers.get(i);
-        float sizeCalc = map((int)mouseHistory.get(i).y, 1, height, 1, 150);
-        m.setSize(sizeCalc);
+        if(i < movers.size()) {
+          Mover m = movers.get(i);
+          float sizeCalc = map((int)mouseHistory.get(i).y, 1, height, 1, 150);
+          //println(sizeCalc);
+          m.setSize(sizeCalc);
+          
+        }
       }
       
       // calculate all sizes
-      
-      println("movers #"+ mouseHistory.size());
-      
+      //println("movers #"+ mouseHistory.size());
       for(int i = 0; i<mouseHistory.size(); i++) {
-        Mover m = movers.get(i);
-        PVector p = m.getPosition();
-        m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
-        if((int)mouseHistory.get(i).y > 0 && (int)mouseHistory.get(i).y <= height) {
-        
+        if(i < movers.size()) {
+          Mover m = movers.get(i);
+          PVector p = m.getPosition();
+          //m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+          m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+          if((int)mouseHistory.get(i).y > 0 && (int)mouseHistory.get(i).y <= height) {
+          
+          }
+          
+          m.step();
+          m.display();
         }
-        
-        m.step();
-        m.display();
       }
       //p = movers.get(0).getImage();
       
+      
+    break;
+    
+    case SINE_MULTIPLE:
+      //https://processing.org/examples/sinewave.html
+      // todo
+      // mit größen mappen
+      // weitere kurven
+      // redraw an/aus
+      sines = imageList.size();
+      
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        int half = width/trailLength;
+        println("sines= "+ sines);
+        for(int k = 0; k<sines; k++) {
+          for(int i = 0; i<trailLength; i++) {
+            movers.add(new Mover(new PVector(half*i, height/2), k));
+          }
+        }
+        for(int i = 0; i<trailLength*sines; i++) movers.get(i).setOffset(i);
+        
+        exporter.setPath(appName +"-sine-multiple");
+        //stateDuration = 5000;
+      }
+      mouseHistory.add(new PVector(0, height/2-sin(inc)*500));
+      inc += 0.01;
+      if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+        
+      for(int k = 0; k<sines; k++) {
+      
+        //mouseHistory.add(new PVector(0, height/2-sin(-inc)*500));
+      
+        
+        
+        //println(trailLength*k + " => " + ((trailLength*k+trailLength)-1));
+        
+        for(int i = trailLength*k; i<(trailLength*k+trailLength)-1; i++) {
+          Mover m = movers.get(i);
+          PVector p = m.getPosition();
+          if(mouseHistory.size() > i) {
+            m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+            m.step();
+            m.display();
+          }
+        }
+      }
+      
+      if(millis() - timestamp > stateDuration) {
+        timestamp = millis();
+        //setState(SINE_SIZE);
+        //transitionStates();
+      }
+      
+    break;
+    
+    case SINE_MULTIPLE_SIZE:
+      //https://processing.org/examples/sinewave.html
+      // todo
+      // mit größen mappen
+      // weitere kurven
+      // redraw an/aus
+      sines = imageList.size();
+      
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;
+        int half = width/trailLength;
+        println("sines= "+ sines);
+        for(int k = 0; k<sines; k++) {
+          for(int i = 0; i<trailLength; i++) {
+            movers.add(new Mover(new PVector(half*i, height/2), k));
+          }
+        }
+        for(int i = 0; i<trailLength*sines; i++) movers.get(i).setOffset(i);
+        
+        exporter.setPath(appName +"-sine-multiple-size");
+        //stateDuration = 5000;
+      }
+      mouseHistory.add(new PVector(0, height/2-sin(inc)*500));
+      inc += 0.01;
+      if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+        
+      for(int i = 0; i<mouseHistory.size(); i++) {
+        if(i < movers.size()) {
+          Mover m = movers.get(i);
+          float sizeCalc = map((int)mouseHistory.get(i).y, 1, height, 1, 150);
+          //println(sizeCalc);
+          m.setSize(sizeCalc);
+          
+        }
+      }  
+        
+      for(int k = 0; k<sines; k++) {
+      
+        //mouseHistory.add(new PVector(0, height/2-sin(-inc)*500));
+      
+        
+        
+        //println(trailLength*k + " => " + ((trailLength*k+trailLength)-1));
+        
+        for(int i = trailLength*k; i<(trailLength*k+trailLength)-1; i++) {
+          Mover m = movers.get(i);
+          PVector p = m.getPosition();
+          if(mouseHistory.size() > i) {
+            m.setPosition((int)p.x, (int)mouseHistory.get(i).y);
+            m.step();
+            m.display();
+          }
+        }
+      }
+      
+      if(millis() - timestamp > stateDuration) {
+        timestamp = millis();
+        //setState(SINE_SIZE);
+        //transitionStates();
+      }
       
     break;
     

@@ -1,11 +1,17 @@
 void mouseDragged() {
-  if(hideGui) addMover();
-  else if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  if (millis() - timestamp > interval) {
+    timestamp = millis();
+    if(hideGui) addMover();
+    else if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  }
 }
 
 void mousePressed() {
-  if(hideGui) addMover();
-  else if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  if (millis() - timestamp > interval) {
+    timestamp = millis();
+    if(hideGui) addMover();
+    else if(mouseY > 100 && stateMachine == STANDARD) addMover();
+  }
 }
 
 void keyPressed() {
@@ -34,15 +40,16 @@ void init() {
   if(firstRun) {
     firstRun = false;
     println("Adding movers...");
-    if(!loadAllAssets) {
+    if(loadingMode == 0) {
       // STANDARD METHODE MIT EINEM SATZ
+      imageList.add(new ArrayList<PImage>());
       for (int i = 0; i <importer.getFiles().size(); i++) {
         //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
         //PImage temp = loadImage(importer.getFiles().get(i));
-        img.add(loadImage(importer.getFiles().get(i)));
+        imageList.get(imageIndex).add(loadImage(importer.getFiles().get(i)));
         original_img.add(loadImage(importer.getFiles().get(i)));
       }
-    } else {
+    } else if(loadingMode == 1) {
       // ERWEITERTE METHODE MIT n-vielen DATENSÄTZEN
       // importer.getFolders().size()
       for (int j = 0; j <2; j++) {
@@ -50,34 +57,44 @@ void init() {
         for (int i = 0; i <importer.getFiles().size(); i++) {
           //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
           //PImage temp = loadImage(importer.getFiles().get(i));
-          img.add(loadImage(importer.getFiles().get(i)));
+          imageList.get(imageIndex).add(loadImage(importer.getFiles().get(i)));
+          original_img.add(loadImage(importer.getFiles().get(i)));
+        }
+      }
+    } else if(loadingMode == 2) {
+      // superAsset Mode
+        
+      for (int j = 0; j <superAsset.length; j++) {
+        imageList.add(new ArrayList<PImage>());
+        
+        importer.loadFiles(importer.folders.get(superAsset[j]));
+        println(importer.getFiles().get(0));
+        
+        for (int i = 0; i <importer.getFiles().size(); i++) {
+          imageList.get(j).add(loadImage(importer.getFiles().get(i)));
           original_img.add(loadImage(importer.getFiles().get(i)));
         }
       }
     }
     
-    println("Normalizing images");
+    //println("Normalizing images");
     // normalize images
-    for(int i = 0; i<img.size(); i++) {
-      getNormalizedImage(img.get(i));
+    for(int k = 0; k<imageList.size(); k++) {
+      for(int i = 0; i<imageList.get(k).size(); i++) {
+        //getNormalizedImage(imageList.get(k).get(i));
+      }
     }
-    nPics = importer.getFiles().size();
+    //nPics = importer.getFiles().size();
     println("done!");
   }
 }
 
 void addMover() {
-  if (millis() - timestamp > interval) {
-    timestamp = millis();
-    movers.add(new Mover(new PVector(mouseX, mouseY)));
-  }
+   movers.add(new Mover(new PVector(mouseX, mouseY), imageIndex)); 
 }
 
 void addMover(int _x, int _y) {
-  if (millis() - timestamp > interval) {
-    timestamp = millis();
-    movers.add(new Mover(new PVector(_x, _y)));
-  }
+    movers.add(new Mover(new PVector(_x, _y), imageIndex));
 }
 
 void clearStates() {
