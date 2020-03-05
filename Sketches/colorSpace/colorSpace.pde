@@ -6,6 +6,7 @@ PeasyCam cam;
 ControlP5 cp5;
 Importer importer;
 Exporter exporter;
+AssetExporter assetExporter;
 
 ArrayList<ColorNode> nodes = new ArrayList<ColorNode>();
 PImage marke;
@@ -63,13 +64,16 @@ void setup() {
   
   importer = new Importer("../../Assets");
   if(importer.getFolders().size() > 0) {
-    importer.loadFiles(importer.getFolders().get(1));
+    importer.loadFiles(importer.getFolders().get(3));
   }
   
   exporter = new Exporter(FPS);
   exporter.setPath(appName);
   
+  assetExporter = new AssetExporter();
+  
   redrawBGCheckbox(y);
+  hideGui(0);
   
 }
 

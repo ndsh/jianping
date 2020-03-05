@@ -156,6 +156,12 @@ void initCP5(PApplet pa) {
    .setPosition(420,30)
    .setSize(60,10)
    ;
+  cp5.addButton("assetExport")
+   .setValue(0)
+   .setLabel("Export Assets")
+   .setPosition(420,60)
+   .setSize(60,10)
+   ;
    
 }
 
@@ -176,6 +182,11 @@ public void linearDrag(int theValue) {
 public void hideGui(int theValue) {
   hideGui = !hideGui;
   println("hideGui= " + hideGui);
+}
+
+public void assetExport(int theValue) {
+  println("export assets");
+  assetExporter.parse();
 }
 
 void modeCheckbox(float[] a) {
