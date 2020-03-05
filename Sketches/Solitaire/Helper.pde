@@ -29,6 +29,12 @@ void keyPressed() {
     nextState(0);
   } else if (keyCode == LEFT) {
     prevState(0);
+  } else if (keyCode == UP) {
+    imageIndex++;
+    if(imageIndex >= superAsset.length) imageIndex = superAsset.length-1;
+  } else if (keyCode == DOWN) {
+    imageIndex--;
+    if(imageIndex <= 0) imageIndex = 0;
   } else if (keyCode == ' ') {
     run = !run;
     println("run= "+ run);
