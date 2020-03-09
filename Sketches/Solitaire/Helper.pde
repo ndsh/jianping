@@ -19,6 +19,9 @@ void keyPressed() {
   } else if (key == 'r' || key == 'R' ) {
     record = !record;
     println("record= " + record);
+  } else if (key == 'o' || key == 'O' ) {
+    overlay = !overlay;
+    println("overlay= " + overlay);
   } else if (key == 'h' || key == 'H' ) {
     hideGui = !hideGui;
     println("hideGui= " + hideGui);
@@ -96,7 +99,7 @@ void init() {
 }
 
 void addMover() {
-   movers.add(new Mover(new PVector(mouseX, mouseY), imageIndex)); 
+   movers.add(new Mover(new PVector(mouseX * screenFactor, mouseY * screenFactor), imageIndex)); 
 }
 
 void addMover(int _x, int _y) {
@@ -106,11 +109,11 @@ void addMover(int _x, int _y) {
 void clearStates() {
   movers.clear();
   println("switching to state= "+ stateMachine);
-  pg = createGraphics(width, height);
-  pg.beginDraw();
+  //pg = createGraphics(width, height);
+  //pg.beginDraw();
   //pg.background(125, 50, 100);
-  pg.imageMode(CENTER);
-  pg.endDraw();
+  //pg.imageMode(CENTER);
+  //pg.endDraw();
   xAxis = 0;
   yAxis = 0;
   stateMachineFirstCycle = true;

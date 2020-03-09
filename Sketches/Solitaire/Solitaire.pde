@@ -8,13 +8,15 @@ ArrayList<PImage> original_img = new ArrayList<PImage>();
 ArrayList<ArrayList<PImage>> imageList = new ArrayList<ArrayList<PImage>>();
 ArrayList<Mover> movers = new ArrayList<Mover>();
 PImage marke;
+PImage silhouette;
 PImage p = null;
+PGraphics pg;
 
 String appName = "solitaire";
 
 int stateMachine = INIT;
 int FPS = 30;
-int[] normalizedBorders = {200, 200};
+int[] normalizedBorders = {200, 160};
 ArrayList<PVector> mouseHistory = new ArrayList<PVector>();
 int trailLength = 200;
 int count = 0;
@@ -23,11 +25,14 @@ int stateDuration = 0;
 
 long timestamp = 0;
 long interval = 20;
+long sineTimestamp = 0;
 int stepDebounce = 20;
+int sineSpeed = 20;
 int globalSteps = 0;
 int imageIndex = 0;
 
 float scaleImages = 1;
+float sineInc = 0.12;
 
 int loadingMode = 2;
 boolean comingFromTransition = false;
@@ -42,11 +47,14 @@ boolean rotateTiles = false;
 boolean fadeBackground = false;
 boolean globalStep = false;
 boolean direction = false;
+boolean overlay = true;
 int imageDraw = CENTER;
 int sines = 0;
 
+float screenFactor;
+
 // a superAsset is a collection or rather concatenation of different assets
-int[] superAsset = {24, 19, 16, 11, 7};
+int[] superAsset = {24, 19, 16, 11, 7, 1};
 
 
 /* * * * * * * * * * * * * 
@@ -56,7 +64,11 @@ int[] superAsset = {24, 19, 16, 11, 7};
 */
 
 void setup() {
-  size(3200, 1000);
+  //size(5000, 1000); // wand 1
+  //size(8000, 1200); // volle auflösung
+  size(4000, 600);
+  pg = createGraphics(8000, 1200);
+  screenFactor = pg.width/width;
   // MBP Resolution
   //size(1600, 500);
   colorMode(HSB, 360, 100, 100);
@@ -64,6 +76,7 @@ void setup() {
   if(imageDraw == CENTER) imageMode(CENTER);
   frameRate(FPS);
   marke = loadImage("tge.png");
+  silhouette = loadImage("silhouette1.png");
   
   importer = new Importer("../../Assets");
   /*
@@ -88,6 +101,50 @@ void draw() {
   stateMachine(stateMachine);
   // to do
   
-  if(record) exporter.export();
+  image(pg, 0, 0, width, height);
+  if(overlay) {
+    //beginDraw();
+    pg.beginDraw();
+    pg.push();
+    pg.imageMode(CORNER);
+    pg.image(silhouette, (3400 ), pg.height-(silhouette.height ), silhouette.width, silhouette.height);
+    pg.pop();
+    
+    pg.push();
+      pg.stroke(255);
+      pg.translate(1600 , 0);
+      pg.line(0, 0, 0, pg.height);
+    pg.pop();
+    
+    pg.push();
+      pg.stroke(255);
+      pg.translate( (1600+3400), 0);
+      pg.line(0, 0, 0, pg.height);
+    pg.pop();
+    
+    pg.endDraw();
+    
+    
+    push();
+    imageMode(CORNER);
+    image(silhouette, (3400 / screenFactor), height-(silhouette.height / screenFactor), silhouette.width / screenFactor, silhouette.height / screenFactor);
+    pop();
+    
+    push();
+      stroke(255);
+      translate(1600 / screenFactor, 0);
+      line(0, 0, 0, height);
+    pop();
+    
+    push();
+      stroke(255);
+      translate( (1600+3400) / screenFactor, 0);
+      line(0, 0, 0, height);
+    pop();
+    
+    
+    
+  }
+  if(record) exporter.export(pg);
   drawGUI();
 }

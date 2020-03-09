@@ -41,7 +41,20 @@ void initCP5(PApplet pa) {
      .setSize(100,10)
      .setLabel("linear")
      ;
-     
+  cp5.addSlider("sineSpeed")
+     .setRange(0,500)
+     .setValue(10)
+     .setPosition(0,50)
+     .setSize(100,10)
+     .setLabel("sine speed")
+     ;
+   cp5.addSlider("sineInc")
+    .setRange(0.00,1.00f)
+     .setValue(0.12f)
+     .setPosition(0,60)
+     .setSize(100,10)
+     .setLabel("sineIncrease")
+     ;
    rotateTilesCheckbox = cp5.addCheckBox("rotateTilesCheckbox")
     .setPosition(150, 10)
     .setSize(32, 8)

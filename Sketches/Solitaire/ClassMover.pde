@@ -35,17 +35,22 @@ class Mover {
   }
   
   void display() {
-    push();
-    translate(origin.x, origin.y);
-    imageMode(CENTER);
-    if(rotateTiles) rotate(rotation);
+    pg.push();
+    pg.translate(origin.x, origin.y);
+    pg.imageMode(CENTER);
+    if(rotateTiles) pg.rotate(rotation);
     //if(size == 0)
     //if(size == 0) image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0);
     //else image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size, (int)size);
     //image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, imageList.get(imageIndexInternal).get((p+offset)).width *scaleImages, imageList.get(imageIndexInternal).get((p+offset)).height*scaleImages);
-    image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size*scaleImages, (int)size*scaleImages);
+    //PImage pp = imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size());
+    float[] newDimensions = calculateAspectRatioFit( imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()).width, imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()).height, normalizedBorders[0]*scaleImages, normalizedBorders[1]*scaleImages);
     
-    pop();
+    //pg.image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size*scaleImages, (int)size*scaleImages);
+    pg.image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, newDimensions[0], newDimensions[1]);
+    
+    
+    pg.pop();
   }
   
   void delete() {
@@ -86,4 +91,22 @@ class Mover {
   void setSize(float _size) {
     size = _size;
   }
+  
+   /**
+  * Conserve aspect ratio of the original region. Useful when shrinking/enlarging
+  * images to fit into a certain area.
+  *
+  * @param {Number} srcWidth width of source image
+  * @param {Number} srcHeight height of source image
+  * @param {Number} maxWidth maximum available width
+  * @param {Number} maxHeight maximum available height
+  * @return {Object} { width, height }
+  */
+  float[] calculateAspectRatioFit(float srcWidth, float srcHeight, float maxWidth, float maxHeight) {
+    //float[] result;
+    float ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    float result[] = {srcWidth*ratio, srcHeight*ratio};
+    //return { width: srcWidth*ratio, height: srcHeight*ratio };
+    return result;
+ }
 }
