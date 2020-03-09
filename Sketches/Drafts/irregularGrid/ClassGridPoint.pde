@@ -81,7 +81,7 @@ class GridPoint {
   }
   void sprite() {
     push();
-    image(images[img], x, y, tileWidth, tileHeight);
+    image(images[img], x+2, y+2, tileWidth-2, tileHeight-2);
     pop();
   }
 }

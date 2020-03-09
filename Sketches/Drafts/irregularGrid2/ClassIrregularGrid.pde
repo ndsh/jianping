@@ -1,8 +1,8 @@
 class IrregularGrid {
   // Initialize
   ArrayList<GridPoint> points = new ArrayList<GridPoint>();
-  int tileWidth = 600;
-  int tileHeight = 600;
+  int tileWidth = 1000;
+  int tileHeight = 1000;
 
   IrregularGrid() {
     for (int x = 0; x < (width/tileWidth); x++) {

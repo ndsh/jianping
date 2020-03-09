@@ -23,9 +23,12 @@ class IrregularGrid {
   void randomlySubdivideGridPoints() {
     ArrayList<GridPoint> newPoints = new ArrayList<GridPoint>();
       
-      for (GridPoint p : points) {
+      for(int i = 0; i<points.size(); i++) {
+        GridPoint p = points.get(i);
+      //for (GridPoint p : points) {
         if (random(1) > 0.2) {
           p.subdivide(newPoints);
+          if (random(1) > 0.5) points.remove(i);
         } else {
           newPoints.add(p);
         }
