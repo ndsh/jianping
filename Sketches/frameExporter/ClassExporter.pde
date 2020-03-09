@@ -79,7 +79,7 @@ class Exporter {
       p.save(fullExportPath + frameNr +".tga");
     } else if(saveMode == 1) {
       // png sucks ass
-      save(fullExportPath + frameNr +".png");
+      p.save(fullExportPath + frameNr +".png");
     }
     frameNr++;
     
