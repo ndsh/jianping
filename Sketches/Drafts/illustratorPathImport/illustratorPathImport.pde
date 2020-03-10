@@ -17,7 +17,7 @@ void setup(){
   
   RG.setPolygonizer(RG.ADAPTATIVE);
   
-  grp = RG.loadShape("canvas2.svg");
+  grp = RG.loadShape("canvas5.svg");
   grp.centerIn(g, 100, 1, 1);
   
   pointPaths = grp.getPointsInPaths();

@@ -11,11 +11,13 @@ static final int SINE_MULTIPLE = 8;
 static final int SINE_MULTIPLE_SIZE = 9;
 static final int SIZE = 10;
 static final int PATH = 11;
-static final int AUTOMATA = 12;
-static final int SNAKE = 13;
-static final int GAUSSIAN = 14;
+static final int PATH_YHEIGHT = 12;
+static final int PATH_SEQUENCE = 13;
+static final int AUTOMATA = 14;
+static final int SNAKE = 15;
+static final int GAUSSIAN = 16;
 
-int maxStates = 12;
+int maxStates = 14;
 
 ////////// STATE VARIABLES
 
@@ -27,7 +29,7 @@ float inc = 0;
 static final String[] stateNames = {
   "Standard", "Linear", "Follow",
   "Turning", "Smear", "Zigzag", "Sine", "Sine Size", "Sine Multiple",
-  "Sine Multiple Size", "Size", "Path", "Automata", "Snake", "Gaussian"
+  "Sine Multiple Size", "Size", "Path", "Path Y-Height", "Path Sequence", "Automata", "Snake", "Gaussian"
 };
 
 String getStateName(int state) {
@@ -272,18 +274,17 @@ void stateMachine(int state) {
         exporter.setPath(appName +"-sine-size");
       }
       
-      mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*height));
-      
-      
-      inc += sineInc;
-      if(mouseHistory.size() >= trailLength) mouseHistory.remove(0);
+      if(millis() - sineTimestamp > sineSpeed) {
+        sineTimestamp = millis();
+        mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*height));
+        inc += sineInc;
+        if(mouseHistory.size() >= trailLength) mouseHistory.remove(0);
+      }
       
       for(int i = 0; i<mouseHistory.size(); i++) {
         if(i < movers.size()) {
           Mover m = movers.get(i);
-          float sizeCalc = map((int)mouseHistory.get(i).y, 1, height/2, 1, 150);
-          if((int)mouseHistory.get(i).y > height/2) sizeCalc = map((int)mouseHistory.get(i).y, height/2, height, 150, 1); 
-          //println(sizeCalc);
+          float sizeCalc = map((int)mouseHistory.get(i).y, 1, pg.height, 1, 150);
           m.setSize(sizeCalc);
           
         }
@@ -332,18 +333,15 @@ void stateMachine(int state) {
         exporter.setPath(appName +"-sine-multiple");
         //stateDuration = 5000;
       }
-      mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*500));
-      inc += sineInc;
-      if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+      
+      if(millis() - sineTimestamp > sineSpeed) {
+        sineTimestamp = millis();
+        mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*height));
+        inc += sineInc;
+        if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+      }
         
       for(int k = 0; k<sines; k++) {
-      
-        //mouseHistory.add(new PVector(0, height/2-sin(-inc)*500));
-      
-        
-        
-        //println(trailLength*k + " => " + ((trailLength*k+trailLength)-1));
-        
         for(int i = trailLength*k; i<(trailLength*k+trailLength)-1; i++) {
           Mover m = movers.get(i);
           PVector p = m.getPosition();
@@ -385,9 +383,13 @@ void stateMachine(int state) {
         exporter.setPath(appName +"-sine-multiple-size");
         //stateDuration = 5000;
       }
-      mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*500));
-      inc += sineInc;
-      if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+      
+      if(millis() - sineTimestamp > sineSpeed) {
+        sineTimestamp = millis();
+        mouseHistory.add(new PVector(0, pg.height/2-sin(inc)*height));
+        inc += sineInc;
+        if(mouseHistory.size() > trailLength*sines) mouseHistory.remove(0);
+      }
         
       for(int i = 0; i<mouseHistory.size(); i++) {
         if(i < movers.size()) {
@@ -395,18 +397,10 @@ void stateMachine(int state) {
           float sizeCalc = map((int)mouseHistory.get(i).y, 1, pg.height, 1, 150);
           //println(sizeCalc);
           m.setSize(sizeCalc);
-          
         }
       }  
         
       for(int k = 0; k<sines; k++) {
-      
-        //mouseHistory.add(new PVector(0, height/2-sin(-inc)*500));
-      
-        
-        
-        //println(trailLength*k + " => " + ((trailLength*k+trailLength)-1));
-        
         for(int i = trailLength*k; i<(trailLength*k+trailLength)-1; i++) {
           Mover m = movers.get(i);
           PVector p = m.getPosition();
@@ -436,6 +430,62 @@ void stateMachine(int state) {
         mv.update();
         mv.display();
       }
+    break;
+    
+    case PATH_YHEIGHT:
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;        
+        exporter.setPath(appName +"-svg-path-y");
+        svg2movers(svgFile);
+        
+        for(int i = 0; i<movers.size(); i++) {
+           Mover m = movers.get(i);
+           PVector p = m.getPosition();
+           float sizeCalc = map(p.y, 1, pg.height, 1, 450);
+           //m.setPosition((int)p.x, (int)sizeCalc);
+           m.setSize(sizeCalc);
+        }
+      }
+      for (Mover mv : movers) {
+        mv.update();
+        mv.display();
+      }
+    break;
+    
+    case PATH_SEQUENCE:
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;        
+        exporter.setPath(appName +"-svg-path-sequence");
+        svg2movers(svgFile);
+        
+        for(int i = 0; i<movers.size(); i++) {
+           Mover m = movers.get(i);
+           PVector p = m.getPosition();
+           float sizeCalc = map(p.y, 200, pg.height-200, 1, 450);
+           m.setSize(sizeCalc);
+        }
+      }
+      
+      for(int i = 0; i<stateIterator; i++) {
+        Mover mv = movers.get(i);
+        //mv.update();
+        mv.display();
+      }
+      if(millis() - timestamp > 15) {
+        timestamp = millis();
+        stateIterator++;
+      }
+      if(stateIterator >= movers.size()) {
+        stateIterator = 0;
+        movers.clear();
+        stateMachineFirstCycle = true;
+      }
+      /*
+      for (Mover mv : movers) {
+        mv.update();
+        mv.display();
+      }
+      */
     break;
     
     case SIZE:

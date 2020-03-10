@@ -28,7 +28,7 @@ void initCP5(PApplet pa) {
      .setLabel("Step speed")
      ;
   cp5.addSlider("scaleImages")
-     .setRange(0.0,1.0f)
+     .setRange(0.0,2.0f)
      .setValue(0.20f)
      .setPosition(0,30)
      .setSize(100,10)

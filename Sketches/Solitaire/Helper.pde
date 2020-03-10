@@ -56,7 +56,7 @@ void init() {
         //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
         //PImage temp = loadImage(importer.getFiles().get(i));
         imageList.get(imageIndex).add(loadImage(importer.getFiles().get(i)));
-        original_img.add(loadImage(importer.getFiles().get(i)));
+        //original_img.add(loadImage(importer.getFiles().get(i)));
       }
     } else if(loadingMode == 1) {
       // ERWEITERTE METHODE MIT n-vielen DATENSÄTZEN
@@ -67,7 +67,7 @@ void init() {
           //img[i] = loadImage("a-"+i+".jpg"); // richards alte methode
           //PImage temp = loadImage(importer.getFiles().get(i));
           imageList.get(imageIndex).add(loadImage(importer.getFiles().get(i)));
-          original_img.add(loadImage(importer.getFiles().get(i)));
+          //original_img.add(loadImage(importer.getFiles().get(i)));
         }
       }
     } else if(loadingMode == 2) {
@@ -81,7 +81,7 @@ void init() {
         
         for (int i = 0; i <importer.getFiles().size(); i++) {
           imageList.get(j).add(loadImage(importer.getFiles().get(i)));
-          original_img.add(loadImage(importer.getFiles().get(i)));
+          //original_img.add(loadImage(importer.getFiles().get(i)));
         }
       }
     }
@@ -122,6 +122,7 @@ void clearStates() {
   trailLength = 100;
   timestamp = millis();
   comingFromTransition = false;
+  stateIterator = 0;
 }
 
 void transitionStates() {
@@ -130,6 +131,7 @@ void transitionStates() {
   trailLength = 200;
   comingFromTransition = true;
   timestamp = millis();
+  stateIterator = 0;
 }
 
 void setState(int theState) {
@@ -161,15 +163,15 @@ void drawGUI() {
   frameRateLabel.setText("Framerate: "+ frameRate);
   if(!hideGui) {
     pushStyle();
-    fill(30);
+    fill(30, 230);
     noStroke();
-    rect(0, 0, width, 100);
+    rect(0, 0, 600, 100);
     fill(0, 100, 100);
     line(0,220,width,220);
     popStyle();
   
     imageMode(CORNER);
-    image(marke, width-135, 85); 
+    image(marke, 600-135, 85); 
   
     cp5.draw();
   }
@@ -187,9 +189,10 @@ void svg2movers(String fn) {
     if (pointPaths[i] != null) {
       c = 0;
       for(int j = 0; j<pointPaths[i].length; j++){
-        movers.add(new Mover(new PVector(pointPaths[i][j].x, pointPaths[i][j].y), i%imageList.get(i).size()));
         
-        int o = c%imageList.get(i).size();
+        movers.add(new Mover(new PVector(pointPaths[i][j].x, pointPaths[i][j].y), i%imageList.get(i%imageList.size()).size()));
+        
+        int o = c%imageList.get(i%imageList.size()).size();
         movers.get(movers.size()-1).setOffset(o);
         c++;
       }

@@ -44,10 +44,28 @@ class Mover {
     //else image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size, (int)size);
     //image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, imageList.get(imageIndexInternal).get((p+offset)).width *scaleImages, imageList.get(imageIndexInternal).get((p+offset)).height*scaleImages);
     //PImage pp = imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size());
-    float[] newDimensions = calculateAspectRatioFit( imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()).width, imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()).height, normalizedBorders[0]*scaleImages, normalizedBorders[1]*scaleImages);
+    float[] newDimensions = calculateAspectRatioFit(
+      imageList.get(imageIndexInternal % imageList.size()).get((p+offset) % imageList.get(imageIndexInternal % imageList.size()).size()).width,
+      imageList.get(imageIndexInternal % imageList.size()).get((p+offset) % imageList.get(imageIndexInternal % imageList.size() ).size()).height,
+      size*scaleImages,
+      size*scaleImages
+    );
     
     //pg.image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, (int)size*scaleImages, (int)size*scaleImages);
-    pg.image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0, newDimensions[0], newDimensions[1]);
+    /*
+    pg.push();
+    pg.noStroke();
+    pg.beginShape();
+    pg.texture(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()));
+    pg.vertex(0, 0, 0, 0);
+    pg.vertex(newDimensions[0], 0, newDimensions[0], 0);
+    pg.vertex(newDimensions[0], newDimensions[1], newDimensions[0], newDimensions[1]);
+    pg.vertex(0, newDimensions[1], 0, newDimensions[1]);
+    pg.endShape();
+    pg.pop();
+    */
+    pg.image(imageList.get(imageIndexInternal % imageList.size()).get((p+offset) % imageList.get(imageIndexInternal % imageList.size()).size()), 0, 0, newDimensions[0], newDimensions[1]);
+    //pg.image(imageList.get(imageIndexInternal).get((p+offset) % imageList.get(imageIndexInternal).size()), 0, 0);
     
     
     pg.pop();
@@ -67,7 +85,7 @@ class Mover {
   void step() {
     if(millis() - timestamp > stepDebounce) {
       timestamp = millis();
-      p = (p+1) % imageList.get(imageIndexInternal).size();
+      p = (p+1) % imageList.get(imageIndexInternal % imageList.size()).size();
       //p += 1;
       //p %= nPics;
       offset = 0;

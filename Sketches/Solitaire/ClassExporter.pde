@@ -114,7 +114,7 @@ class Exporter {
   }
   
   void setPath(String s) {
-    path = s;
+    if(!superSequence) path = s;
   }
   
   void setMode(int m) {

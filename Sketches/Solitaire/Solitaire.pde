@@ -26,6 +26,7 @@ int trailLength = 200;
 int count = 0;
 int nPics = 150;
 int stateDuration = 0;
+int stateIterator = 0;
 
 long timestamp = 0;
 long interval = 20;
@@ -51,7 +52,7 @@ boolean rotateTiles = false;
 boolean fadeBackground = false;
 boolean globalStep = false;
 boolean direction = false;
-boolean overlay = true;
+boolean overlay = false;
 int imageDraw = CENTER;
 int sines = 0;
 
@@ -60,9 +61,11 @@ float screenFactor;
 // a superAsset is a collection or rather concatenation of different assets
 //int[] superAsset = {24, 19, 16, 11, 7, 1, 5, 8, 2};
 //int[] superAsset = {11, 24};
-int[] superAsset = {0, 1, 3, 6, 9, 10, 13, 16, 20, 22, 24, 26, 27, 29, 30};
+int[] superAsset = {0, 1, 3, 6};
 
-String svgFile = "canvas5_p3.svg";
+String svgFile = "1 horiz_zigzag_1.svg";
+
+boolean superSequence = true;
 
 
 /* * * * * * * * * * * * * 
@@ -74,8 +77,8 @@ String svgFile = "canvas5_p3.svg";
 void setup() {
   //size(5000, 1000); // wand 1
   //size(8000, 1200); // volle auflösung
-  size(4000, 600);
-  pg = createGraphics(8000, 1200);
+  size(3000, 450, P2D);
+  pg = createGraphics(8000, 1200, P2D);
   
   RG.init(this);
   RG.ignoreStyles(false);
