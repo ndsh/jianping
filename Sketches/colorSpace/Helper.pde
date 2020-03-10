@@ -76,25 +76,25 @@ void initCam(PApplet pa) {
 
 void drawCenter() {
   if(center) {
-    pushMatrix();
+    pg.pushMatrix();
     // x axis
-    beginShape(LINES);
-    vertex(-scaleX, 0, 0);
-    vertex(scaleX, 0, 0);
-    endShape();
+    pg.beginShape(LINES);
+    pg.vertex(-scaleX, 0, 0);
+    pg.vertex(scaleX, 0, 0);
+    pg.endShape();
     
     // y axis
-    beginShape(LINES);
-    vertex(0, -scaleY, 0);
-    vertex(0, scaleY, 0);
-    endShape();
+    pg.beginShape(LINES);
+    pg.vertex(0, -scaleY, 0);
+    pg.vertex(0, scaleY, 0);
+    pg.endShape();
     
     // z axis
-    beginShape(LINES);
-    vertex(0, 0, -scaleZ);
-    vertex(0, 0, scaleZ);
-    endShape();
-    popMatrix();
+    pg.beginShape(LINES);
+    pg.vertex(0, 0, -scaleZ);
+    pg.vertex(0, 0, scaleZ);
+    pg.endShape();
+    pg.popMatrix();
   }
 }
 
@@ -116,7 +116,9 @@ void drawGUI() {
 }
 
 void drawNodes() {
-  
+  pg.beginDraw();
+  pg.setMatrix(getMatrix()); // replace the PGraphics-matrix
+
   for(int i = 0; i<nodes.size(); i++) {
     
     //PVector d = nodes.get(i).getPosition();
@@ -144,7 +146,7 @@ void drawNodes() {
       // color space mode
       if(presentation) {
         drawCenter();
-        pushMatrix();
+        pg.pushMatrix();
         float mX = 0;
         float mY = 0;
         float mZ = 0;
@@ -154,27 +156,27 @@ void drawNodes() {
           float brightness = map(d[2], 0, 100, -scaleY, scaleY);
           mX = saturation * cos(hue);
           mZ = saturation * sin(hue);
-          translate(mX, brightness, mZ);
+          pg.translate(mX, brightness, mZ);
         } else if(mode == 1) {
           mX = map(d[0], 0, 255, -scaleX, scaleX);
           mY = map(d[1], 0, 255, -scaleY, scaleY);
           mZ = map(d[2], 0, 255, -scaleZ, scaleZ);
           //println(i +"= " + d[0] + "/"+ d[1] + "/"+ d[2] + " from file= "+ nodes.get(i).getName());
-          translate(mX, mY, mZ);
+          pg.translate(mX, mY, mZ);
         }
         
-        scale(scaleImages);
-        pushStyle();
-        imageMode(imageDraw);
-        image(nodes.get(i).getImage(), 0, 0);
+        pg.scale(scaleImages);
+        pg.pushStyle();
+        pg.imageMode(imageDraw);
+        pg.image(nodes.get(i).getImage(), 0, 0);
         //image(nodes.get(i).getNormalizedImage(), 0, 0);
         
-        popStyle();
-        popMatrix();
+        pg.popStyle();
+        pg.popMatrix();
       } else {
         // sets in linear mode
-        pushStyle();
-        imageMode(imageDraw);
+        pg.pushStyle();
+        pg.imageMode(imageDraw);
         /*
           int linearLimit = 360;
           int linearIndex = 0;
@@ -198,18 +200,19 @@ void drawNodes() {
             componentIndex++;
           }
           int nodeNr = matchingComponents.get(componentIndex);
-          pushMatrix();
-          imageMode(imageDraw);
-          translate(width/2, height/2, 0);
-          image(nodes.get(nodeNr).getImage(), 0, 0);
+          pg.pushMatrix();
+          pg.imageMode(imageDraw);
+          pg.translate(pg.width/2, pg.height/2, 0);
+          pg.image(nodes.get(nodeNr).getImage(), 0, 0);
           //image(nodes.get(i).getNormalizedImage(), 0, 0);
 
-          popMatrix();
+          pg.popMatrix();
         }
-        popStyle();
+        pg.popStyle();
       }
     }
   }
+  pg.endDraw();
 }
 
 void mousePressed() {
@@ -228,7 +231,7 @@ boolean checkGUIcollision() {
 
 void modeChangeEvent() {
   if(mode == 0) {
-    colorMode(HSB, 360, 100, 100);
+    pg.colorMode(HSB, 360, 100, 100);
     range0.setRange(0,360);
     range1.setRange(0,100);
     range2.setRange(0,100);
@@ -242,7 +245,7 @@ void modeChangeEvent() {
     range1.setRangeValues(0,100);
     range2.setRangeValues(0,100);
   } else if(mode == 1) {
-    colorMode(RGB, 255, 255, 255);
+    pg.colorMode(RGB, 255, 255, 255);
     range0.setRange(0,255);
     range1.setRange(0,255);
     range2.setRange(0,255);

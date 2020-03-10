@@ -11,6 +11,7 @@ AssetExporter assetExporter;
 ArrayList<ColorNode> nodes = new ArrayList<ColorNode>();
 PImage marke;
 PGraphics pg;
+PMatrix mat_scene; // to store initial PMatrix
 
 String appName = "colorspace";
 
@@ -54,6 +55,7 @@ boolean mouseWasDragged = false;
 void setup() {
   size(3200, 1000, P3D);
   pg = createGraphics(3200, 1000, P3D);
+  mat_scene = getMatrix();
   frameRate(FPS);
   marke = loadImage("tge.png");
   surface.setLocation(0, 0);
@@ -82,20 +84,27 @@ void setup() {
 void draw() {
   if(rotate) cam.rotateY(rotationSpeed);
   
-  perspective(PI/5, width/height, 1, 1000000);
+  pg.perspective(PI/5, width/height, 1, 1000000);
+  pg.beginDraw();
   if(mode == 0) {
-    colorMode(HSB, 360, 100, 100);
-    if(redrawBackground) background(0, 0, 100);
+    pg.colorMode(HSB, 360, 100, 100);
+    if(redrawBackground) pg.background(0, 0, 100);
   } else if(mode == 1) {
-    colorMode(RGB, 255);
-    if(redrawBackground) background(255);
+    pg.colorMode(RGB, 255);
+    if(redrawBackground) pg.background(255);
   }
-  
+  pg.endDraw();
   
   init();
   
   
   if(isRunnable) drawNodes();
+  push();
+  imageMode(CORNER);
+  setMatrix(mat_scene); // replace the PeasyCam-matrix
+
+  image(pg, 0, 0, width, height);
+  pop();
   if(record) exporter.export(pg);
   drawGUI();
 }
