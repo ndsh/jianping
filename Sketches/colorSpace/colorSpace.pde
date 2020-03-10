@@ -10,6 +10,7 @@ AssetExporter assetExporter;
 
 ArrayList<ColorNode> nodes = new ArrayList<ColorNode>();
 PImage marke;
+PGraphics pg;
 
 String appName = "colorspace";
 
@@ -52,6 +53,7 @@ boolean mouseWasDragged = false;
 
 void setup() {
   size(3200, 1000, P3D);
+  pg = createGraphics(3200, 1000, P3D);
   frameRate(FPS);
   marke = loadImage("tge.png");
   surface.setLocation(0, 0);
@@ -94,6 +96,6 @@ void draw() {
   
   
   if(isRunnable) drawNodes();
-  if(record) exporter.export();
+  if(record) exporter.export(pg);
   drawGUI();
 }
