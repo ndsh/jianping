@@ -10,11 +10,12 @@ static final int SINE_SIZE = 7;
 static final int SINE_MULTIPLE = 8;
 static final int SINE_MULTIPLE_SIZE = 9;
 static final int SIZE = 10;
-static final int AUTOMATA = 11;
-static final int SNAKE = 12;
-static final int GAUSSIAN = 13;
+static final int PATH = 11;
+static final int AUTOMATA = 12;
+static final int SNAKE = 13;
+static final int GAUSSIAN = 14;
 
-int maxStates = 11;
+int maxStates = 12;
 
 ////////// STATE VARIABLES
 
@@ -26,7 +27,7 @@ float inc = 0;
 static final String[] stateNames = {
   "Standard", "Linear", "Follow",
   "Turning", "Smear", "Zigzag", "Sine", "Sine Size", "Sine Multiple",
-  "Sine Multiple Size", "Size", "Automata", "Snake", "Gaussian"
+  "Sine Multiple Size", "Size", "Path", "Automata", "Snake", "Gaussian"
 };
 
 String getStateName(int state) {
@@ -423,6 +424,18 @@ void stateMachine(int state) {
         //transitionStates();
       }
       
+    break;
+    
+    case PATH:
+      if(stateMachineFirstCycle) {
+        stateMachineFirstCycle = false;        
+        exporter.setPath(appName +"-svg-path");
+        svg2movers(svgFile);
+      }
+      for (Mover mv : movers) {
+        mv.update();
+        mv.display();
+      }
     break;
     
     case SIZE:

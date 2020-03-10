@@ -1,7 +1,7 @@
 void mouseDragged() {
   if (millis() - timestamp > interval) {
     timestamp = millis();
-    if(hideGui) addMover();
+    if(hideGui && stateMachine == STANDARD) addMover();
     else if(mouseY > 100 && stateMachine == STANDARD) addMover();
   }
 }
@@ -9,7 +9,7 @@ void mouseDragged() {
 void mousePressed() {
   if (millis() - timestamp > interval) {
     timestamp = millis();
-    if(hideGui) addMover();
+    if(hideGui && stateMachine == STANDARD) addMover();
     else if(mouseY > 100 && stateMachine == STANDARD) addMover();
   }
 }
@@ -173,5 +173,29 @@ void drawGUI() {
   
     cp5.draw();
   }
+  
+}
+
+void svg2movers(String fn) {
+  grp = RG.loadShape(fn);
+  //grp.centerIn(g, 100, 1, 1);
+  pointPaths = grp.getPointsInPaths();
+  println(pointPaths.length);
+  // pfade auslesen
+  int c = 0;
+  for(int i = 0; i<pointPaths.length; i++){
+    if (pointPaths[i] != null) {
+      c = 0;
+      for(int j = 0; j<pointPaths[i].length; j++){
+        movers.add(new Mover(new PVector(pointPaths[i][j].x, pointPaths[i][j].y), i%imageList.get(i).size()));
+        
+        int o = c%imageList.get(i).size();
+        movers.get(movers.size()-1).setOffset(o);
+        c++;
+      }
+    }
+  }
+  
+  //println(movers.size());
   
 }

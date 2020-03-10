@@ -29,7 +29,7 @@ void initCP5(PApplet pa) {
      ;
   cp5.addSlider("scaleImages")
      .setRange(0.0,1.0f)
-     .setValue(1.0f)
+     .setValue(0.20f)
      .setPosition(0,30)
      .setSize(100,10)
      .setLabel("imgScale")

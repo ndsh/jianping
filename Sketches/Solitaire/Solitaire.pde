@@ -1,4 +1,8 @@
 import controlP5.*;
+import geomerative.*;
+
+RShape grp;
+RPoint[][] pointPaths;
 
 ControlP5 cp5;
 Importer importer;
@@ -54,7 +58,11 @@ int sines = 0;
 float screenFactor;
 
 // a superAsset is a collection or rather concatenation of different assets
-int[] superAsset = {24, 19, 16, 11, 7, 1};
+//int[] superAsset = {24, 19, 16, 11, 7, 1, 5, 8, 2};
+//int[] superAsset = {11, 24};
+int[] superAsset = {0, 1, 3, 6, 9, 10, 13, 16, 20, 22, 24, 26, 27, 29, 30};
+
+String svgFile = "canvas5_p3.svg";
 
 
 /* * * * * * * * * * * * * 
@@ -68,6 +76,12 @@ void setup() {
   //size(8000, 1200); // volle auflösung
   size(4000, 600);
   pg = createGraphics(8000, 1200);
+  
+  RG.init(this);
+  RG.ignoreStyles(false);
+  
+  RG.setPolygonizer(RG.ADAPTATIVE);
+  
   screenFactor = pg.width/width;
   // MBP Resolution
   //size(1600, 500);
