@@ -46,6 +46,7 @@ void draw(){
   
   z = 10 * sin( frameCount/50.0 * PI);
   
+  // pfade auslesen
   for(int i = 0; i<pointPaths.length; i++){
     translate(0,0,z);
 
@@ -59,9 +60,4 @@ void draw(){
   }
   
   
-}
-
-void mousePressed(){
-  ignoringStyles = !ignoringStyles;
-  RG.ignoreStyles(ignoringStyles);
 }
