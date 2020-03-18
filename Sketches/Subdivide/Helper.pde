@@ -2,7 +2,7 @@
 void keyPressed() {
   if (keyCode == RIGHT) {
     //grid.randomlySubdivideGridPoints();
-    grid.subdivideContextually();
+    //grid.subdivideContextually();
     //grid.subdivideMeasured();
   } else if(keyCode == LEFT) {
     grid = new IrregularGrid();

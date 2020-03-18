@@ -19,8 +19,8 @@ int threshold = 80;
 int[] superAsset = {1};
 
 void setup() {
-  size(600, 600);
-  pg = createGraphics(2000, 2000);
+  size(900, 600, P2D);
+  pg = createGraphics(900, 600, P2D);
   
   importer = new Importer("../../Assets");
   for (int j = 0; j <superAsset.length; j++) {

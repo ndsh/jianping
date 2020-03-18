@@ -73,6 +73,7 @@ class GridPoint {
   int getImageIndex() {
     return img;
   }
+  
 
   void tri() {
     push();

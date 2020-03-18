@@ -56,7 +56,10 @@ class IrregularGrid {
   
   void subdivideMeasured() {
     ArrayList<GridPoint> newPoints = new ArrayList<GridPoint>();
-    
+    // wir haben einen "node"
+    // wir teilen diesen point in n-teile auf (z.B. 2 oder 4)
+    // wir geben uns die durchschnittsfarbe von allen nodes wieder
+    // unterscheidet sich diese
     
     int o = 0;
     for(int i = 0; i<points.size(); i++) {
@@ -68,7 +71,9 @@ class IrregularGrid {
       //else {
         //newPoints.add(p);
       //}
-      if (measureDetail(target, (int)p.x, (int)p.y, (int)p.tileWidth, (int)p.tileHeight) < threshold) {//too little detail
+      int measure = measureDetail(target, (int)p.x, (int)p.y, (int)p.tileWidth, (int)p.tileHeight);
+      println(measure);
+      if (measure < threshold) {//too little detail
         //color a = average(grid, x, y, width, height);
         newPoints.add(p);
       } else {
