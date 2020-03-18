@@ -1,7 +1,7 @@
 void keyPressed() {
   // SPACE to save
   if(keyCode == 32) {
-    save();
+//    save();
   } else if (key == 'r') {
       record = !record;
       println("record= " + record);
@@ -26,8 +26,12 @@ void processImage() {
     //println("Parts from image: " + key);
     for (Part part : p) {
       buffer.image(_img.get(part.posx, part.posy, part.w, part.h), part.x, part.y);
+      coordinates.append(part.posx +","+ part.posy+","+ part.w+","+ part.h+","+ part.x+","+ part.y);
     }
   }
+  String[] toText = coordinates.array();
+  String date = year() +""+ nf(month(), 2) +""+ nf(day(), 2) +""+ nf(hour(), 2) +""+ nf(minute(), 2) +""+ nf(second(), 2);
+  saveStrings(sketchPath("../Drafts/qtreeLoader/import/"+textFileOutput), toText);
 
   //println("done");
   done = true;
@@ -41,12 +45,6 @@ void processImage() {
 }
 
 
-
-void save() {
-  String fn = foldername + "export" + "/res_" + sessionid + hex((int)random(0xffff),4)+"_"+filename+fileext;
-    buffer.save(fn);
-    println("Image "+ fn + " saved");
-}
 
 void prepare_image() {
   imgb = new PVector[img.width][img.height];
@@ -103,13 +101,20 @@ void find_match(int posx, int posy, int w, int h) {
   LImage currimg = null;
 
   for (int i=0; i<number_of_iterations; i++) {
+    //println(imgsb.size() + " +++ " + number_of_iterations);
     LImage _img = imgsb.get( (int)random(imgsb.size()) );
+    //LImage _img = imgsb.get( imgsb.size()-4 );
     //LImage _img = imgsb.get( imgsb.size()-1 );
-    for (int iter=0; iter<number_of_blocks; iter++) {
-      int xx = (int)random(_img.w-w-1);
+    for (int iter = 0; iter<number_of_blocks; iter++) {
+      int a = _img.w-w-1;
+      int xx = (int)random(a);
+      //xx = a-1;
+      
       //int xx = (_img.w-w-1)/2;
       //println(_img.w-w-1);
-      int yy = (int)random(_img.h-h-1);
+      int b = _img.h-h-1;
+      int yy = (int)random(b);
+      //int yy = b-1;
       //int yy = (_img.h-h-1)/2;
       //int xx = _img.w;
       //int yy = _img.h;

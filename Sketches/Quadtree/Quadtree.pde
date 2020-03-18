@@ -1,3 +1,5 @@
+StringList coordinates;
+
 PVector[][] imgb;
 
 String foldername = "targets/";
@@ -11,6 +13,8 @@ String appName = "quadtree";
 int FPS = 30;
 boolean record = true;
 
+String textFileOutput = "file.txt";
+
 
 // another example
 final static String pattern_prefix = "assets/printmarks/pm";
@@ -22,16 +26,21 @@ final static int pattern_size = 2; // number of digits
 // choose method of mapping
 int mode = ABS_MODE;  // list below AVG_MODE, ABS_MODE, DIST_MODE
 
-int THR = 20; // higher value bigger rectangles (1..200)
-int MINR = 4; // minimum block (4..200)
 
+// standard
+// THR = 20, MINR = 4, iter = 4, blocks = 10
+int THR = 10; // higher value bigger rectangles (1..200)
+int MINR = 450; // minimum block (4..200)
+
+int[] minrSteps = {500, 450, 400, 350, 300, 250, 200, 180, 160, 120, 100, 80, 60, 40, 30, 20, 10, 8, 6, 4, 3, 2, 1};
+int stepIndex = 0;
 /*
 int THR = 20; // higher value bigger rectangles (1..200)
 int MINR = 4; // minimum block (4..200)
 */
 
-int number_of_iterations = 4; // more = more variety
-int number_of_blocks = 100; // more = more search tries
+int number_of_iterations = 1; // more = more variety
+int number_of_blocks = 1; // more = more search tries
 
 // MODEs LIST
 final static int AVG_MODE = 0; // worst matching, difference of avgs of the luma
@@ -56,6 +65,7 @@ ArrayList<LImage> imgsb = new ArrayList<LImage>();
 HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
 
 void setup() {
+  coordinates = new StringList();
   //size(3200, 1000);
   size(800, 250);
   
