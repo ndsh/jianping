@@ -59,11 +59,19 @@ int sines = 0;
 float screenFactor;
 
 // a superAsset is a collection or rather concatenation of different assets
-//int[] superAsset = {24, 19, 16, 11, 7, 1, 5, 8, 2};
+int[] superAsset = {24, 19, 16, 11, 7, 1, 5, 8, 2};
 //int[] superAsset = {11, 24};
-int[] superAsset = {0, 1, 3, 6};
+//int[] superAsset = {0, 1, 3, 6};
 
-String svgFile = "1 horiz_zigzag_1.svg";
+
+
+
+///// 
+String svgFile = "daydream-02 .svg";
+///// 
+
+
+
 
 boolean superSequence = true;
 
