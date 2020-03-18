@@ -175,7 +175,7 @@ public class ImageCompressor
     try {
       //System.out.println(System.getProperty("user.dir"));
                                                     
-      BufferedImage image = ImageIO.read(new File("/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/data/quadtree_original.png"));
+      BufferedImage image = ImageIO.read(new File("/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/data/target.jpg"));
 
       normalQuadtreeCompress(image);			
       channalSeparatedQuadtreeCompress(image);
@@ -192,7 +192,7 @@ public class ImageCompressor
 
     int width = image.getWidth();
     int height = image.getHeight();
-    String path = "/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/";
+    String path = "/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/";
     String fileName = "normal_output.txt";
     String str = "";
     BufferedWriter writer = new BufferedWriter(new FileWriter(path+fileName, true));
@@ -213,7 +213,7 @@ public class ImageCompressor
           writer.append(str +"\n");
         }
       }
-      ImageIO.write(outImage, "png", new File("/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/normal_quad" + k + ".png"));
+      ImageIO.write(outImage, "png", new File("/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/normal_quad" + k + ".png"));
     }
     writer.close();
   }
@@ -226,7 +226,7 @@ public class ImageCompressor
 
     int width = image.getWidth();
     int height = image.getHeight();
-    String path = "/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/";
+    String path = "/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/";
     String fileName = "separated_output.txt";
     String str = "xiao";
     BufferedWriter writer = new BufferedWriter(new FileWriter(path+fileName, true));
@@ -239,10 +239,8 @@ public class ImageCompressor
       BufferedImage outImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       str = "#" + k;
       writer.append(str +"\n");
-      for (int i = 0; i < width; i++)
-      {
-        for (int j = 0; j < height; j++)
-        {
+      for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
           int rgb = ColorUtil.rgb(
             (int) (double)redTree.get(i, j), 
             (int) (double)greenTree.get(i, j), 
@@ -262,7 +260,7 @@ public class ImageCompressor
       
         
 
-      //ImageIO.write(outImage, "png", new File("/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/channel_separated_quad" + k + ".png"));
+      ImageIO.write(outImage, "png", new File("/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/channel_separated_quad" + k + ".png"));
     }
     writer.close();
   }
@@ -277,7 +275,7 @@ public class ImageCompressor
       QuadTree<Vector3DDouble> gradientTree = new QuadTree<Vector3DDouble>(gradient, new GradientMeasure(), k / 300.0);
 
       BufferedImage outImage = makeImage(gradientTree, image);
-      ImageIO.write(outImage, "png", new File("/Users/julianhespenheide/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/gradient_quad" + k + ".png"));
+      ImageIO.write(outImage, "png", new File("/Users/thegreeneyl/Documents/Development/Git/jianping/Sketches/Drafts/quadtreeCompression/export/gradient_quad" + k + ".png"));
     }
   }
 
