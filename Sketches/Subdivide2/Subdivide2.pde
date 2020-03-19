@@ -26,6 +26,8 @@ int maxDepth = 6;
 color limitColor = color(0);
 float colorTolerance = 100;
 
+boolean onByOne = false;
+
 void setup() {
   size(900, 600, P2D);
   pg = createGraphics(900, 600, P2D);

@@ -105,15 +105,15 @@ class Node {
   }
 
   void display() {
-    if(brightness(thisColor) >= brightness(limitColor) && brightness(thisColor) < brightness(limitColor)+colorTolerance) {
+    //if(brightness(thisColor) >= brightness(limitColor) && brightness(thisColor) < brightness(limitColor)+colorTolerance) {
       
       //tri();
       //sprite();
-      //colorTile();
-      spriteTile();
+      colorTile();
+      //spriteTile();
       //plain();
       step();
-    } 
+    //} 
     
   }
 

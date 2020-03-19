@@ -17,12 +17,17 @@ class IrregularGrid {
   
   void display() {
     
-    //for(int i = 0; i<points.size(); i++) points.get(i).display();
     int upperLimit = points.size()-1;
-    for(int i = depthStep; i>0; i--) points.get(i).display();
-    depthStep++;
-    //println(depthStep);
-    if(depthStep >= upperLimit) depthStep = 0;
+    //for(int i = 0; i<points.size(); i++) points.get(i).display();
+    if(!onByOne) {
+      for(int i = upperLimit; i>0; i--) points.get(i).display();
+      } else {
+        
+        for(int i = depthStep; i>0; i--) points.get(i).display();
+        depthStep++;
+      //println(depthStep);
+        if(depthStep >= upperLimit) depthStep = 0;
+    }
   }
   
   void randomlySubdivideGridPoints() {
