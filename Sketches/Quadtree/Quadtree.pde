@@ -13,7 +13,10 @@ String appName = "quadtree";
 int FPS = 30;
 boolean record = true;
 
+//String exportPath = "../Drafts/qtreeLoader/import/";
+String exportPath = "export/text/";
 String textFileOutput = "file.txt";
+String date = year() +""+ nf(month(), 2) +""+ nf(day(), 2) +""+ nf(hour(), 2) +""+ nf(minute(), 2) +""+ nf(second(), 2);
 
 
 // another example
@@ -89,7 +92,7 @@ void setup() {
   
   exporter = new Exporter(FPS);
   exporter.setPath(appName);
-  exporter.setLimit(1);
+  exporter.setLimit(minrSteps.length);
   
   //processImage();
   background(0);
@@ -98,7 +101,12 @@ void setup() {
 }
 
 void draw() {
-  processImage();
-  image(buffer, 0, 0, width, height);
-  if(record) exporter.export(buffer);
+  if(stepIndex < minrSteps.length) {
+    MINR = minrSteps[stepIndex];
+    textFileOutput = "file_"+ MINR +".txt";
+    processImage();
+    image(buffer, 0, 0, width, height);
+    if(record) exporter.export(buffer);
+    stepIndex++;
+  }
 }

@@ -30,8 +30,7 @@ void processImage() {
     }
   }
   String[] toText = coordinates.array();
-  String date = year() +""+ nf(month(), 2) +""+ nf(day(), 2) +""+ nf(hour(), 2) +""+ nf(minute(), 2) +""+ nf(second(), 2);
-  saveStrings(sketchPath("../Drafts/qtreeLoader/import/"+textFileOutput), toText);
+  saveStrings(sketchPath(exportPath+textFileOutput), toText);
 
   //println("done");
   done = true;
@@ -42,7 +41,7 @@ void processImage() {
 
   buffer.endDraw();
   //image(buffer,0,0,width,height);
-}
+} // end processImage()
 
 
 
