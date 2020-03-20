@@ -10,6 +10,8 @@ int imageIndex = 0;
 int[] superAsset = {1};
 int[] normalizedBorders = {50, 80};
 
+int globalSizeLimit = 50;
+
 void setup() {
   size(1400, 1400, P2D);
   surface.setLocation(0, 0);

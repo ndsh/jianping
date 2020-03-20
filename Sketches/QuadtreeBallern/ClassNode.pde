@@ -126,7 +126,7 @@ class Node {
   */
 
   void spriteTile() {
-    if(tileWidth < 40) {
+    if(tileWidth < (int)map(mouseX, 0, width, 0, 2000)) {
       float[] newDimensions = calculateAspectRatioFit(
         imageList.get(0 % imageList.size()).get((step) % imageList.get(0 % imageList.size()).size()).width,
         imageList.get(0 % imageList.size()).get((step) % imageList.get(0 % imageList.size() ).size()).height,
