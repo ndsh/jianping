@@ -14,7 +14,7 @@ PGraphics pg;
 // the color that we consider "not worth changing"
 color baseColor = color(0, 0, 0);
 // tolerance from baseColor to our averageColor
-int tolerance = 20;
+int tolerance = 0;
 int threshold = 80;
 
 int[] superAsset = {1};
@@ -23,8 +23,8 @@ int depthStep = 0;
 int depth = 0;
 int maxDepth = 6;
 
-color limitColor = color(0);
-float colorTolerance = 100;
+color limitColor = color(255);
+float colorTolerance = 10;
 
 boolean onByOne = false;
 
