@@ -12,10 +12,10 @@ void processImage() {
   imgsb = new ArrayList<LImage>();
   parts = new HashMap<String, ArrayList<Part>>();
   buffer.beginDraw();
-
+  buffer.background(255);
   //println("Preparing data");
   
-  prepare_patterns();
+  prepare_patterns_new();
   segment(0, img.width-1, 0, img.height-1, 2);
 
   //println("Layering");
@@ -73,6 +73,30 @@ void prepare_patterns() {
     for (int x=0; x<_img.width; x++) {
       for (int y=0; y<_img.height; y++) {
         int c = _img.get(x, y);
+        float r = map((c>>16)&0xff, 0, 255, 0, 1);
+        float g = map((c>>8)&0xff, 0, 255, 0, 1);
+        float b = map(c&0xff, 0, 255, 0, 1);
+        PVector v = new PVector(r, g, b);
+        bi.b[x][y] = v;
+      }
+    }
+    imgsb.add(bi);
+  }
+}
+
+void prepare_patterns_new() {
+  LImage bi = null;
+  for (int i = pattern_init; i < importer.getFiles().size(); i++) {
+    //PImage _img = imageList.get(0).get(i);
+    //println(fname);
+    bi = new LImage();
+    bi.b = new PVector[imageList.get(0).get(i).width][imageList.get(0).get(i).height];
+    bi.name = importer.getFiles().get(i);
+    bi.w = imageList.get(0).get(i).width;
+    bi.h = imageList.get(0).get(i).height;
+    for (int x=0; x<imageList.get(0).get(i).width; x++) {
+      for (int y=0; y<imageList.get(0).get(i).height; y++) {
+        int c = imageList.get(0).get(i).get(x, y);
         float r = map((c>>16)&0xff, 0, 255, 0, 1);
         float g = map((c>>8)&0xff, 0, 255, 0, 1);
         float b = map(c&0xff, 0, 255, 0, 1);
