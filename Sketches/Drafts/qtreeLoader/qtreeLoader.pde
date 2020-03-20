@@ -6,7 +6,7 @@ void setup() {
   pg = createGraphics(3400, 3400);
   pg.beginDraw();
   pg.background(255);
-  coordinates = loadStrings("import/file.txt");
+  coordinates = loadStrings("import/file_4.txt");
   String[] split = null;
   println(coordinates.length);
   for(int i = 0; i<coordinates.length; i++) {
