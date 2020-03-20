@@ -4,6 +4,8 @@ PVector[][] imgb;
 
 String foldername = "targets/";
 String filename = "1.jpg";
+int[] superAsset = {2};
+int exportHowManyFrames = 100;
 
 
 Importer importer;
@@ -68,11 +70,8 @@ HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
 
 boolean exportFiles = false;
 
-int[] superAsset = {31};
-int exportHowManyFrames = 100;
 
 void setup() {
-  coordinates = new StringList();
   //size(3200, 1000);
   size(100, 100, P2D);
   

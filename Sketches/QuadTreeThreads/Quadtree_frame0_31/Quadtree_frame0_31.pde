@@ -5,7 +5,8 @@ PVector[][] imgb;
 
 String foldername = "targets/";
 String filename = "0.jpg";
-
+int[] superAsset = {2};
+int exportHowManyFrames = 100;
 
 Importer importer;
 Exporter exporter;
@@ -69,8 +70,7 @@ HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
 
 boolean exportFiles = false;
 
-int[] superAsset = {31};
-int exportHowManyFrames = 100;
+
 
 void setup() {
   //size(3200, 1000);
@@ -115,18 +115,8 @@ void setup() {
 }
 
 void draw() {
-  if(exportFiles) {
-    if(stepIndex < minrSteps.length) {
-      MINR = minrSteps[stepIndex];
-      textFileOutput = "file_"+ MINR +".txt";
-      processImage();
-      image(buffer, 0, 0, width, height);
-      if(record) exporter.export(buffer);
-      stepIndex++;
-    }
-  } else {
+    prepare_image();
     processImage();
     image(buffer, 0, 0, width, height);
     if(record) exporter.export(buffer);
-  }
 }

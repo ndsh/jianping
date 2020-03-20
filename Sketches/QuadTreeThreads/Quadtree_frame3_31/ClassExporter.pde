@@ -29,7 +29,8 @@ class Exporter {
     // for more information about which file extension to pick:
     // https://forum.processing.org/one/topic/saveframe-framerate-comparison-discussion-on-capturing-high-resolution-sketch-output.html
     String folderFormat = y + m + d + "_" + h + i + s;
-    String fullExportPath = "../../../Exports/"+ path +"/"+ folderFormat +"/"; 
+    String fullExportPath = "../../../Exports/"+ path +"/"+ folderFormat +"/";
+    println("saving frameNr = "+ frameNr + " of " + frameLimit);
     if(saveMode == 0) {
       // tga is the fastest export. no compression
       save(fullExportPath + frameNr +".tga");
