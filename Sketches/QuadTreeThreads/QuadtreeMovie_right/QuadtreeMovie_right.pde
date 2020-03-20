@@ -12,7 +12,7 @@ String filename = "title_ch_onwhite_01.jpg";
 String moviename = "3400x1200.mp4";
 
 /// //// ////
-int[] superAsset = {42};
+int[] superAsset = {2};
 int exportHowManyFrames = 30;
 
 

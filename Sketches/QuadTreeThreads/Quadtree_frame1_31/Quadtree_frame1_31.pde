@@ -4,7 +4,7 @@ PVector[][] imgb;
 
 String foldername = "targets/";
 String filename = "1.jpg";
-int[] superAsset = {2};
+int[] superAsset = {42};
 int exportHowManyFrames = 100;
 
 
