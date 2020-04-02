@@ -63,6 +63,6 @@ void keyPressed() {
       println(resource.getFilenames());
       
       println("-------");
-          background(255);
+      background(255);
   }
 }

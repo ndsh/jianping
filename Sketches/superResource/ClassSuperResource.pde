@@ -49,6 +49,7 @@ class SuperResource {
     for (int j = 0; j <resources.length; j++) {
       imageList.add(new ArrayList<PImage>());
       filenames.add(new StringList());
+      //println("fn size at [" + j +"] --> "+ filenames.size());
       resourceOffset[j] = 0;
       resourceLimit[j] = 0;
       importer.loadFiles(importer.folders.get(resources[j]));
@@ -62,7 +63,7 @@ class SuperResource {
         //println(importer.getFiles().get(i));
       }
     }
-    resourceLimit[0] = 1;
+    resourceLimit[currentSet] = 1;
     //println(maxima);
     //println(currentLimit);
   }
@@ -78,13 +79,21 @@ class SuperResource {
     boolean setAoffsetting = false;
     boolean setB = false;
     output = new ArrayList<PImage>();
+    namelist = new StringList();
     int currentSetNext = (currentSet+1) % resources.length;
     
-    print("currentSet = "+ currentSet);
+    //print("currentSet = "+ currentSet);
+    //println();
+    /*
     println(" / currentSetNext = "+ currentSetNext);
-    
+    println("----");
+    println(filenames.get(currentSet));
+    println(" ");
+    println(filenames.get(currentSetNext));
+    println("----");
     println("1 " + resourceOffset[currentSet] + " => " + resourceLimit[currentSet] +" | "+ maxima[currentSet]);
     println("2 " + resourceOffset[currentSetNext] + " => " + resourceLimit[currentSetNext] +" | "+ maxima[currentSetNext]);
+    */
     
     for(int i = resourceOffset[currentSet]; i<resourceLimit[currentSet]; i++) {
       output.add(imageList.get(currentSet).get(i));
@@ -137,6 +146,7 @@ class SuperResource {
     // wenn das momentane set + 1 am limit ankommt 
     //currentSet++;
     //currentSet %= resources.length;
+    //println("output size= " + output.size());
   }
   
   int size() {
@@ -153,6 +163,15 @@ class SuperResource {
   
   int getCurrentIndex() {
     return current;
+  }
+  
+  void setCurrentset(int _i) {
+    currentSet = _i;
+  }
+  
+  void setCurrentlimit(int _i) {
+    if(_i == 0) _i = 1;
+    resourceLimit[currentSet] = _i;
   }
   
   

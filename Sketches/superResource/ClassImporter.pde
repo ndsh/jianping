@@ -30,6 +30,7 @@ class Importer {
   }
 
   void loadFiles(String folder) {
+    files = new StringList();
     println("\nListing info about all files in a directory and all subdirectories: ");
     ArrayList<File> allFiles = listFilesRecursive(path+"/"+folder);
     int c = 0;
