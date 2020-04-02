@@ -169,6 +169,11 @@ class SuperResource {
     currentSet = _i;
   }
   
+  void setCurrentlimit(int _i) {
+    if(_i == 0) _i = 1;
+    resourceLimit[currentSet] = _i;
+  }
+  
   
   
   //String getCurrentFilename() {

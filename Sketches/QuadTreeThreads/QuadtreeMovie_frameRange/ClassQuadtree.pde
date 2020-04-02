@@ -8,7 +8,7 @@ class Quadtree {
 
 
   // choose method of mapping
-  int mode = ABS_MODE;  // list below AVG_MODE, ABS_MODE, DIST_MODE
+  int mode = DIST_MODE;  // list below AVG_MODE, ABS_MODE, DIST_MODE
 
 
   // standard
@@ -34,7 +34,8 @@ class Quadtree {
 
   Quadtree() {
     //buffer = createGraphics(mov.width, mov.height, P2D);
-    buffer = createGraphics(mov.width, mov.height, P2D);
+    if(exportMode == 0) buffer = createGraphics(mov.width, mov.height, P2D);
+    else if(exportMode == 1 || exportMode == 2) buffer = createGraphics(target.width, target.height, P2D);
     //buffer.smooth(8);
     buffer.beginDraw();
     buffer.noStroke();
@@ -47,7 +48,8 @@ class Quadtree {
   }
 
   void prepare_image() {
-    img = mov;
+    if(exportMode == 0) img = mov;
+    if(exportMode == 1 || exportMode == 2) img = target; 
 
     imgb = new PVector[img.width][img.height];
     for (int x=0; x<img.width; x++) {
@@ -225,7 +227,8 @@ class Quadtree {
   }
 
   final float getLuma(PVector v) {
-    return v.x*0.3+0.59*v.y+0.11*v.z;
+    //return v.x*0.3+0.59*v.y+0.11*v.z;
+    return v.x*0.25+0.25*v.y+0.25*v.z;
   }
 
   final int getLumaN(PVector v) {
