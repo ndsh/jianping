@@ -12,6 +12,7 @@ void setup() {
   
   importer = new Importer("../../Assets");
   resource = new SuperResource();
+  resource.setMethod(1);
   resource.setResources(superAsset);
   resource.loadResources();
   
