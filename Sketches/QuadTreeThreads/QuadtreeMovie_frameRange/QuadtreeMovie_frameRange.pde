@@ -11,7 +11,7 @@ String[] fileset = {
   "042x-alpha.png", "042x-black.png", "042x-white.png",
   "052x-alpha.png", "052x-black.png", "052x-white.png",
   "062x-alpha.png", "062x-black.png", "062x-white.png"}; 
-String moviename = "third_white.mp4";
+String moviename = "30scale_white_150speed.mp4";
 int filesetIndex = 0;
 
 /// //// ////
@@ -77,6 +77,7 @@ void setup() {
   importer = new Importer("../../../Assets");
   
   resource = new SuperResource();
+  resource.setMethod(1);
   resource.setResources(superAsset);
   resource.loadResources();
   resource.setCurrentset(currentSet);
