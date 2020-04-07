@@ -25,6 +25,7 @@ void processImage() {
     image(_img, 0, 0);
     //println("Parts from image: " + key);
     for (Part part : p) {
+      //buffer.image(_img.get(part.posx, part.posy, part.w, part.h), part.x, part.y);
       buffer.image(_img.get(part.posx, part.posy, part.w, part.h), part.x, part.y);
       
     }

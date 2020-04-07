@@ -71,6 +71,7 @@ class Exporter {
     
     if(frameNr >= frameLimit && frameLimit != 0) {
       println("Exporter= Finished saving frames until limit ( "+ frameLimit +" ).\nQuitting now");
+      println("endMillis= " + (millis() - startMillis));
       exit();
     }
     

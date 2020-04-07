@@ -6,7 +6,7 @@ PVector[][] imgb;
 String foldername = "targets/";
 String filename = "0.jpg";
 int[] superAsset = {2};
-int exportHowManyFrames = 100;
+int exportHowManyFrames = 10;
 
 Importer importer;
 Exporter exporter;
@@ -70,6 +70,7 @@ HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
 
 boolean exportFiles = false;
 
+int startMillis;
 
 
 void setup() {
@@ -111,11 +112,12 @@ void setup() {
   background(0);
 
   prepare_image();
+  startMillis = millis();
   
 }
 
 void draw() {
-    prepare_image();
+    //prepare_image();
     processImage();
     image(buffer, 0, 0, width, height);
     if(record) exporter.export(buffer);
