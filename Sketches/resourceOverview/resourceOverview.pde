@@ -61,7 +61,7 @@ void draw() {
     importer.loadFiles(importer.getFolders().get(i));
     //for(int k = 0; k<
     pg.push();
-    pg.translate(40, 300*i);
+    pg.translate(40, 300*i+(300));
     pg.text(importer.getFolders().get(i), 0, -150);
     pg.push();
     pg.translate(500, -150);
@@ -80,7 +80,10 @@ void draw() {
   }
   pg.endDraw();
   image(pg, width, height);
-  pg.save("output.png");
+  String[] out = importer.getFolders().array();
+  for(int i = 0; i<out.length; i++) out[i] = "["+ i +"] " + out[i];
+  pg.save("export/output.png");
+  saveStrings("export/output.txt", out);
   exit();
 }
 
