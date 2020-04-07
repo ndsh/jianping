@@ -1,6 +1,7 @@
 Importer importer;
 SuperResource resource;
-int[] superAsset = {33, 11, 45, 20};
+int[] superAsset = {25, 1, 2, 3};
+String[] superAssetNames = {"jianping-black-letters", "jianping-letters"};
 
 int interval = 33;
 long timestamp = 0;
@@ -11,9 +12,10 @@ void setup() {
   surface.setLocation(0, 0);
   
   importer = new Importer("../../Assets");
+  println(importer.getFolders());
   resource = new SuperResource();
   resource.setMethod(1);
-  resource.setResources(superAsset);
+  resource.setResources(superAssetNames);
   resource.loadResources();
   
   //println("currentIndex = " + resource.getCurrentIndex());

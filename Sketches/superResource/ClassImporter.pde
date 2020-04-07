@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.*;
+
 class Importer {
   //StringList filenames = new StringList();
   String path;
@@ -22,8 +24,9 @@ class Importer {
   void loadFolders() {
     println("\nListing info about all files in a directory: ");
     File[] files = listFiles(path);
+    Arrays.sort(files);
     for (int i = 0; i < files.length; i++) {
-      File f = files[i];    
+      File f = files[i];
       if (f.isDirectory()) folders.append(f.getName());
     }
     println(folders.size() + " subfolder(s) found");
@@ -79,6 +82,7 @@ class Importer {
     File file = new File(dir);
     if (file.isDirectory()) {
       String names[] = file.list();
+      names = sort(names);
       return names;
     } else {
       // If it's not a directory
