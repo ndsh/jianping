@@ -17,6 +17,7 @@ class SuperResource {
   private int increaseInterval = 10; // every 10 frames increase
   private int currentSet = 0;
   private int current = 0;
+  private boolean finished = false;
   
   SuperResource() {
     
@@ -133,6 +134,7 @@ class SuperResource {
       //println("a+b");
       currentSet++;
       currentSet %= resources.length;
+      finished = true;
       //if(currentSet > resources.length) currentSet = 0;
       //println(currentSet);
       for(int i = 0; i<resources.length; i++) {
@@ -213,6 +215,7 @@ class SuperResource {
       //println("a+b");
       currentSet++;
       currentSet %= resources.length;
+      finished = true;
       //if(currentSet > resources.length) currentSet = 0;
       //println(currentSet);
       for(int i = 0; i<resources.length; i++) {
@@ -258,6 +261,14 @@ class SuperResource {
   
   void setMethod(int i) {
     mode = i;
+  }
+  
+  boolean isFinished() {
+    return finished;
+  }
+  
+  void reset() {
+    finished = false;
   }
   
   
