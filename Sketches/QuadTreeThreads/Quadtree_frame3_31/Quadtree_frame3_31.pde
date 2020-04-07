@@ -6,9 +6,9 @@ ArrayList<ArrayList<PImage>> imageList = new ArrayList<ArrayList<PImage>>();
 PVector[][] imgb;
 
 String foldername = "targets/";
-String filename = "3.jpg";
-int[] superAsset = {42};
-int exportHowManyFrames = 100;
+String filename = "zoom-10.png";
+int[] superAsset = {12};
+int exportHowManyFrames = 1;
 
 
 Importer importer;
@@ -91,7 +91,7 @@ void setup() {
   //surface.setSize(neww, newh);
   surface.setLocation(800, 300);
   
-  importer = new Importer("../../../Assets");
+  importer = new Importer("../../../Assets_gradual");
   for (int j = 0; j <superAsset.length; j++) {
     imageList.add(new ArrayList<PImage>());
     
