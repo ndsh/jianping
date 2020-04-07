@@ -1,6 +1,8 @@
 class Quadtree {
   ArrayList<LImage> imgsb = new ArrayList<LImage>();
   HashMap<String, ArrayList<Part>> parts = new HashMap<String, ArrayList<Part>>();
+  
+  color bg = color(255);
 
   boolean do_blend = false; // blend image after process
   int blend_mode = OVERLAY; // blend type
@@ -39,14 +41,16 @@ class Quadtree {
     //buffer.smooth(8);
     buffer.beginDraw();
     buffer.noStroke();
-    buffer.background(255);
+    buffer.background(bg);
     buffer.endDraw();
   }
   
   PImage getBuffer() {
     return buffer;
   }
-
+  void setBackground(color _bg) {
+    bg = _bg;
+  }
   void prepare_image() {
     if(exportMode == 0) img = mov;
     if(exportMode == 1 || exportMode == 2) img = target; 
@@ -71,7 +75,7 @@ class Quadtree {
     imgsb = new ArrayList<LImage>();
     parts = new HashMap<String, ArrayList<Part>>();
     buffer.beginDraw();
-    buffer.background(255);
+    buffer.background(bg);
     //println("Preparing data");
 
     prepare_patterns_new();
@@ -103,7 +107,7 @@ class Quadtree {
 
   void prepare_patterns_new() {
     LImage bi = null;
-    println(resource.getImageList().size());
+    //println(resource.getImageList().size());
     for (int i = 0; i < resource.size(); i++) {
       //PImage _img = imageList.get(0).get(i);
       //println(fname);

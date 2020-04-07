@@ -17,15 +17,17 @@ class SuperResource {
   private int increaseInterval = 10; // every 10 frames increase
   private int currentSet = 0;
   private int current = 0;
+  private boolean finished = false;
   
   SuperResource() {
     
   }
   
   void update() {
-    
-    if(mode == 0) assemble_method0();
-    else if(mode == 1) assemble_method1();
+    if(!isFinished()) {
+      if(mode == 0) assemble_method0();
+      else if(mode == 1) assemble_method1();
+    }
   }
   
   //unnötig
@@ -133,6 +135,7 @@ class SuperResource {
       //println("a+b");
       currentSet++;
       currentSet %= resources.length;
+      finished = true;
       //if(currentSet > resources.length) currentSet = 0;
       //println(currentSet);
       for(int i = 0; i<resources.length; i++) {
@@ -211,15 +214,7 @@ class SuperResource {
     
     if(setA && setB) {
       //println("a+b");
-      currentSet++;
-      currentSet %= resources.length;
-      //if(currentSet > resources.length) currentSet = 0;
-      //println(currentSet);
-      for(int i = 0; i<resources.length; i++) {
-        resourceOffset[i] = 0;
-        resourceLimit[i] = 0;
-      }
-      resourceLimit[currentSet] = maxima[currentSet];
+      advance();
     }
       
       
@@ -258,6 +253,27 @@ class SuperResource {
   
   void setMethod(int i) {
     mode = i;
+  }
+  
+  boolean isFinished() {
+    return finished;
+  }
+  
+  void reset() {
+    finished = false;
+  }
+  
+  void advance() {
+    currentSet++;
+    currentSet %= resources.length;
+    finished = true;
+    //if(currentSet > resources.length) currentSet = 0;
+    //println(currentSet);
+    for(int i = 0; i<resources.length; i++) {
+      resourceOffset[i] = 0;
+      resourceLimit[i] = 0;
+    }
+    resourceLimit[currentSet] = maxima[currentSet];
   }
   
   

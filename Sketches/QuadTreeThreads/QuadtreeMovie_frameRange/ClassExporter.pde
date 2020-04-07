@@ -47,10 +47,11 @@ class Exporter {
     
     // show the record frame
     push();
-    stroke(255,0,0);
-    strokeWeight(2);
-    noFill();
-    rect(0,0,width-1,height-1);
+    //stroke(255,0,0);
+    //strokeWeight(2);
+    //noFill();
+    fill(255, 0, 0);
+    rect(0,0,4,4);
     pop();
     
   }
@@ -71,7 +72,9 @@ class Exporter {
     frameNr++;
     
     if(frameNr >= frameLimit && frameLimit != 0) {
-      println("Exporter= Finished saving frames until limit ( "+ frameLimit +" ).\nQuitting now");
+      println();
+      println("~ ~ ~ ~ ~ ~ ~ ~ ~ ");
+      println("### Exporter= Finished saving frames until limit ( "+ frameLimit +" ).\n### Quitting now");
       exit();
     }
     
@@ -79,10 +82,12 @@ class Exporter {
     // if we have a peasycam
     //if(cam != null) cam.beginHUD();
     push();
-    stroke(255,0,0);
-    strokeWeight(2);
-    noFill();
-    rect(0,0,width-1,height-1);
+    //stroke(255,0,0);
+    //strokeWeight(2);
+    //noFill();
+    noStroke();
+    fill(255, 0, 0);
+    ellipse(width-10,height-10,6,6);
     pop();
     // if(cam != null) cam.endHUD();
     

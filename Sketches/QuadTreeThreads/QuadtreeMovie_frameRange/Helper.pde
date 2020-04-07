@@ -1,3 +1,9 @@
+import processing.video.*;
+Movie mov;
+Importer importer;
+Exporter exporter;
+SuperResource resource;
+
 void keyPressed() {
   // SPACE to save
   if(keyCode == 32) {
@@ -12,7 +18,44 @@ void keyPressed() {
 final static int[] blends = {ADD, SUBTRACT, DARKEST, LIGHTEST, DIFFERENCE, EXCLUSION, MULTIPLY, SCREEN, OVERLAY, HARD_LIGHT, SOFT_LIGHT, DODGE, BURN};
 
 
-// movie functions
+// exportMode 2 index walker
+int filesetIndex = 0;
+
+// timing array vars
+//long timestamp = 0;
+int timingIndex = 0;
+boolean timingCheckpoint = false;
+int lastFrame = 0;
+
+// export vars
+boolean record = true;
+
+// some globals
+PImage img;
+PImage target;
+PVector[][] imgb;
+
+// qtree helper functions
+Quadtree qtreeExec() {
+    Quadtree tree = new Quadtree();
+    tree.setBackground(treeBG);
+    tree.prepare_image();
+    tree.processImage();
+    image(tree.getBuffer(), 0, 0, width, height);
+    return tree;
+}
+
+void cleanUp(Quadtree tree) {
+  if(record) exporter.export(tree.getBuffer());
+  delay(5);
+  System.gc();
+}
+
+
+
+// movie functions + variables
+int newFrame = 0;
+
 void movieEvent(Movie m) {
   m.read();
 }
@@ -48,3 +91,15 @@ void setFrame(int n) {
 int getLength() {
   return int(mov.duration() * mov.frameRate);
 }
+
+
+float[] calculateAspectRatioFit(float srcWidth, float srcHeight, float maxWidth, float maxHeight) {
+    //float[] result;
+    float ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+    float result[] = {srcWidth*ratio, srcHeight*ratio};
+    //return { width: srcWidth*ratio, height: srcHeight*ratio };
+    return result;
+ }
+
+// unused var
+String date = year() +""+ nf(month(), 2) +""+ nf(day(), 2) +""+ nf(hour(), 2) +""+ nf(minute(), 2) +""+ nf(second(), 2);
