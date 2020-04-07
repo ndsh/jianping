@@ -38,13 +38,17 @@ String[] fileset = {
   "062x-alpha.png", "062x-black.png", "062x-white.png"}; 
 
 /**
-*    @param superAsset[]                   list of folder we want to add to our pool and walk through via the SuperResource class
+*    @param superAsset[]                   list of folders we want to add to our pool and walk through via the SuperResource class
+*    @param superAssetNames[]              list of folders we want to add to our pool and walk through via the SuperResource class.
+*    @param useNamedAssets                 use superAsset in index or clear name form
 *    @param currentSet                     start of the superAsset. usually 0
 *    @param currentSetLimit                upper limit of assets that should be loaded into the SuperResource class
 *    @param increasePerFrame               how many frames have to elapse before adding anoter asset to the pool ( linear growth ) 
 *
 */
 int[] superAsset = {20};
+String[] superAssetNames = {"jianping-black-letters", "jianping-letters"};
+boolean useNamedAssets = true;
 int currentSet = 0;
 int currentSetLimit = 21;
 int increasePerFrame = 1;
@@ -117,7 +121,8 @@ void setup() {
   
   resource = new SuperResource();
   resource.setMethod(1);
-  resource.setResources(superAsset);
+  if(useNamedAssets) resource.setResources(superAssetNames);
+  else resource.setResources(superAsset);
   resource.loadResources();
   resource.setCurrentset(currentSet);
   resource.setCurrentlimit(currentSetLimit); // wieviele sets im anfangsset zu sehen sind 

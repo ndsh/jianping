@@ -43,6 +43,22 @@ class SuperResource {
     }
   }
   
+  void setResources(String[] names) {
+    StringList folders = importer.getFolders();
+    int[] results = new int[names.length];
+    
+    for(int i = 0; i<names.length; i++) {
+      for(int j = 0; j<folders.size(); j++) {
+        if(folders.get(j).equals(names[i])) {
+          results[i] = j;
+          break;
+        }
+      }
+      
+    }
+    setResources(results);
+  }
+  
   void loadResources() {
     imageList =  new ArrayList<ArrayList<PImage>>();
     filenames = new ArrayList<StringList>();
@@ -133,16 +149,7 @@ class SuperResource {
     
     if(setA && setB) {
       //println("a+b");
-      currentSet++;
-      currentSet %= resources.length;
-      finished = true;
-      //if(currentSet > resources.length) currentSet = 0;
-      //println(currentSet);
-      for(int i = 0; i<resources.length; i++) {
-        resourceOffset[i] = 0;
-        resourceLimit[i] = 0;
-      }
-      resourceLimit[currentSet] = 1;
+      advance();
     }
       
       
