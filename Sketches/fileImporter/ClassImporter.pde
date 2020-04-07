@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.*;
+
 class Importer {
   //StringList filenames = new StringList();
   String path;
@@ -6,36 +8,35 @@ class Importer {
   StringList files = new StringList();
   
   String[] legalFiles = {"jpg", "JPG", "jpeg", "JPEG", "png", "PNG"};
+  
+  IntList maxima = new IntList();
 
   Importer(String _root) {
     // Using just the path of this sketch to demonstrate,
     // but you can list any directory you like.
     path = sketchPath(_root);
     loadFolders();
-    folders.sort();
     for(int i = 0; i<folders.size(); i++) {
       println("\t["+ i +"] " + folders.get(i));
-    }
-    
-    if (getFolders().size() > 0) {
-      loadFiles(getFolders().get(0));
     }
   }
 
   void loadFolders() {
     println("\nListing info about all files in a directory: ");
     File[] files = listFiles(path);
+    Arrays.sort(files);
     for (int i = 0; i < files.length; i++) {
-      File f = files[i];    
+      File f = files[i];
       if (f.isDirectory()) folders.append(f.getName());
     }
     println(folders.size() + " subfolder(s) found");
   }
 
   void loadFiles(String folder) {
+    files = new StringList();
     println("\nListing info about all files in a directory and all subdirectories: ");
     ArrayList<File> allFiles = listFilesRecursive(path+"/"+folder);
-
+    int c = 0;
     for (File f : allFiles) {
       if (!f.isDirectory()) {
         boolean okayFile = false;
@@ -55,10 +56,14 @@ class Importer {
          println("Last Modified: " + lastModified);
          println("-----------------------");
          */
-        if(okayFile) files.append(f.getAbsolutePath());
+        if(okayFile) {
+          files.append(f.getAbsolutePath());
+          c++;
+        }
       }
     }
-    println(files.size() + " file(s) found");
+    maxima.append(c);
+    println(c + " file(s) found");
   }
 
   StringList getFolders() {
@@ -67,12 +72,17 @@ class Importer {
   StringList getFiles() {
     return files;
   }
+  
+  int getCount(int i) {
+    return maxima.get(i);
+  }
 
   // This function returns all the files in a directory as an array of Strings  
   String[] listFileNames(String dir) {
     File file = new File(dir);
     if (file.isDirectory()) {
       String names[] = file.list();
+      names = sort(names);
       return names;
     } else {
       // If it's not a directory
