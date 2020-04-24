@@ -117,16 +117,16 @@ class Quadtree {
       //println(resource.getFilenames().get(i));
       bi = new LImage();
       //bi.b = new PVector[imageList.get(0).get(i).width][imageList.get(0).get(i).height];
-      PImage image = loadImage(); 
-      bi.b = new PVector[resource.getImageList().get(i).width][resource.getImageList().get(i).height];
-
       bi.name = resource.getFilenames().get(i);
-      bi.w = resource.getImageList().get(i).width;
-      
-      bi.h = resource.getImageList().get(i).height;
+      PImage image = loadImage(bi.name); 
+      //bi.b = new PVector[resource.getImageList().get(i).width][resource.getImageList().get(i).height];
+      bi.b = new PVector[image.width][image.height];
+
+      bi.w = image.width;
+      bi.h = image.height;
       for (int x=0; x<bi.w; x++) {
         for (int y=0; y<bi.h; y++) {
-          int c = resource.getImageList().get(i).get(x, y);
+          int c = image.get(x, y);
           float r = map((c>>16)&0xff, 0, 255, 0, 1);
           float g = map((c>>8)&0xff, 0, 255, 0, 1);
           float b = map(c&0xff, 0, 255, 0, 1);

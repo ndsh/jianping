@@ -302,8 +302,8 @@ class SuperResource {
     println("1 " + resourceOffset[currentSet] + " => " + resourceLimit[currentSet] +" | "+ maxima[currentSet]);
     println("2 " + resourceOffset[currentSetNext] + " => " + resourceLimit[currentSetNext] +" | "+ maxima[currentSetNext]);
     */
-    println("currentSet --> " + currentSet);
-    println("currentSetNext --> " + currentSetNext);
+    //println("currentSet --> " + currentSet);
+    //println("currentSetNext --> " + currentSetNext);
     
     for(int i = resourceOffset[currentSet]; i<resourceLimit[currentSet]; i++) {
       output.add(imageList.get(currentSet).get(i % imageList.get(currentSet).size() ));
