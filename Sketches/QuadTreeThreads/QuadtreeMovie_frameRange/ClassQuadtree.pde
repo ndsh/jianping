@@ -32,7 +32,7 @@ class Quadtree {
   final static int ABS_MODE = 1; // difference of the luma each pixel
   final static int DIST_MODE = 2; // best matching, distance between pixels colors (vectors)
   
-  final static int OBL = 6;
+  final static int OBL = 5;
   
   PGraphics buffer;
 

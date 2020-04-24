@@ -30,7 +30,7 @@ int exportHowManyFrames = 1;
 *    @param fileset[]                      walk through array for exportMode = 2;
 */
 String foldername = "targets/";
-String moviename = "TRGT-200416-size100%-3min_1_30.mp4";
+String moviename = "trgt-200423.mp4";
 String filename = "062x-black.png";
 String[] fileset = {
   "042x-alpha.png", "042x-black.png", "042x-white.png",
@@ -151,8 +151,8 @@ int increasePerFrame = 1;
 *    @param endFrame                       ending of the range, as an offset: end = startFrame+endFrame  
 */
 boolean frameRange = false;
-int startFrame = 0;// abgebrochen bei 4800; 20 frames zurückgesprungen
-int endFrame = 4437;
+int startFrame = 2352;// abgebrochen bei 4800; 20 frames zurückgesprungen
+int endFrame = 4953;
 
 /**
 *    @param useTimingArray                 should the timingArray be used
