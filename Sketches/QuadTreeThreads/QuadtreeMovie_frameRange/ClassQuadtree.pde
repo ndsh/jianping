@@ -16,7 +16,7 @@ class Quadtree {
   // standard
   // THR = 20, MINR = 4, iter = 4, blocks = 10
   int THR = 20; // higher value bigger rectangles (1..200)
-  int MINR = 4; // minimum block (4..200)
+  int MINR = 4; // minimum block (4..200) // 200422 = 4
 
 
   /*
@@ -24,13 +24,15 @@ class Quadtree {
    int MINR = 4; // minimum block (4..200)
    */
 
-  int number_of_iterations = 2; // more = more variety // 4
-  int number_of_blocks = 32; // more = more search tries // 100
+  int number_of_iterations = 4; // more = more variety // 4 ---> 2  // 200422 = 2
+  int number_of_blocks = 50; // more = more search tries // 100 // 200422 = 33
 
   // MODEs LIST
   final static int AVG_MODE = 0; // worst matching, difference of avgs of the luma
   final static int ABS_MODE = 1; // difference of the luma each pixel
   final static int DIST_MODE = 2; // best matching, distance between pixels colors (vectors)
+  
+  final static int OBL = 6;
   
   PGraphics buffer;
 
@@ -43,6 +45,7 @@ class Quadtree {
     buffer.noStroke();
     buffer.background(bg);
     buffer.endDraw();
+    randomSeed(millis() + second() + hour() + minute() + day() + year() + month());
   }
   
   PImage getBuffer() {
@@ -54,7 +57,7 @@ class Quadtree {
   void prepare_image() {
     if(exportMode == 0) img = mov;
     if(exportMode == 1 || exportMode == 2) img = target; 
-
+  
     imgb = new PVector[img.width][img.height];
     for (int x=0; x<img.width; x++) {
       for (int y=0; y<img.height; y++) {
@@ -70,8 +73,6 @@ class Quadtree {
 
 
   void processImage() {
-
-
     imgsb = new ArrayList<LImage>();
     parts = new HashMap<String, ArrayList<Part>>();
     buffer.beginDraw();
@@ -79,7 +80,7 @@ class Quadtree {
     //println("Preparing data");
 
     prepare_patterns_new();
-    segment(0, img.width-1, 0, img.height-1, 2);
+    segment(0, img.width-1, 0, img.height-1, OBL); // 7, original = 2. objekttiefe?!
 
     //println("Layering");
     for (String key : parts.keySet ()) {
@@ -108,18 +109,23 @@ class Quadtree {
   void prepare_patterns_new() {
     LImage bi = null;
     //println(resource.getImageList().size());
+    // alt 
     for (int i = 0; i < resource.size(); i++) {
+    //for (int i = 0; i < resource.getsize(); i++) {
+      //println("resource size=" + resource.size());
       //PImage _img = imageList.get(0).get(i);
-      //println(fname);
+      //println(resource.getFilenames().get(i));
       bi = new LImage();
       //bi.b = new PVector[imageList.get(0).get(i).width][imageList.get(0).get(i).height];
+      PImage image = loadImage(); 
       bi.b = new PVector[resource.getImageList().get(i).width][resource.getImageList().get(i).height];
 
       bi.name = resource.getFilenames().get(i);
       bi.w = resource.getImageList().get(i).width;
+      
       bi.h = resource.getImageList().get(i).height;
-      for (int x=0; x<resource.getImageList().get(i).width; x++) {
-        for (int y=0; y<resource.getImageList().get(i).height; y++) {
+      for (int x=0; x<bi.w; x++) {
+        for (int y=0; y<bi.h; y++) {
           int c = resource.getImageList().get(i).get(x, y);
           float r = map((c>>16)&0xff, 0, 255, 0, 1);
           float g = map((c>>8)&0xff, 0, 255, 0, 1);
@@ -219,8 +225,8 @@ class Quadtree {
     if ((obl>0) || (diffx>MINR && diffy>MINR && godeeper(x1, x2, y1, y2))) {
       //int midx = (int)random(diffx/2-diffx/4, diffx/2+diffx/4);
       //int midy = (int)random(diffy/2-diffy/4, diffy/2+diffy/4);
-      int midx = diffx/2-diffx/4;
-      int midy = diffy/2-diffy/4;
+      int midx = diffx/2+diffx/4;
+      int midy = diffy/2+diffy/4;
       segment(x1, x1+midx, y1, y1+midy, obl-1);
       segment(x1+midx+1, x2, y1, y1+midy, obl-1);
       segment(x1, x1+midx, y1+midy+1, y2, obl-1);
@@ -231,8 +237,9 @@ class Quadtree {
   }
 
   final float getLuma(PVector v) {
-    //return v.x*0.3+0.59*v.y+0.11*v.z;
-    return v.x*0.25+0.25*v.y+0.25*v.z;
+    return v.x*0.3+0.59*v.y+0.11*v.z;
+    
+    //return (v.x*0.25) + (0.25*v.y) + (0.25*v.z);
   }
 
   final int getLumaN(PVector v) {
@@ -335,9 +342,6 @@ class LImage {
 class Part {
   int posx, posy, w, h;
   int x, y;
-
-  Part() {
-  }
 
   String toString() {
     return "(" + posx + "," + posy + "," + w + "," + h + ") -> (" + x + "," + y + ")" ;
