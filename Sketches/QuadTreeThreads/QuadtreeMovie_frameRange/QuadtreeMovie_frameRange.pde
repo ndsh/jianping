@@ -30,7 +30,7 @@ int exportHowManyFrames = 1;
 *    @param fileset[]                      walk through array for exportMode = 2;
 */
 String foldername = "targets/";
-String moviename = "trgt-200423.mp4";
+String moviename = "200425 865-360.mp4";
 String filename = "062x-black.png";
 String[] fileset = {
   "042x-alpha.png", "042x-black.png", "042x-white.png",
@@ -105,7 +105,8 @@ String[] superAssetNames = {
   "jianping-raster-99"
 };
 */
-String[] superAssetNames = {"jianping-white-letters-22", "jianping-shapes-35", "jianping-bodoni-white-62", "jianping-farbe-pink", "jianping-printmarks-209", "jianping-raster-99", "jianping-raster-99", "jianping-werbung-108", "jianping-farbe-brownish", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-letters-89", "jianping-farbe-gruen", "jianping-farbe-gelb", "jianping-farbe-blau", "jianping-farbe-pink", "jianping-farbe-rot", "jianping-faces-62", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-raster-99", "jianping-random-178", "jianping-black-letters-50", "jianping-extracts-3298", "jianping-raster-99", "jianping-bodoni-white-62", "jianping-white-letters-57", "jianping-bodoni-black", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-random-178", "jianping-extracts-3298", "05-mix-47", "jianping-faces-31", "jianping-trashbags-marx-35", "jianping-shapes-35", "jianping-printmarks-209", "jianping-black-letters-50", "jianping-farbe-lila", "jianping-raster-99", "jianping-white-letters-22"};
+//String[] superAssetNames = {"jianping-white-letters-22", "jianping-shapes-35", "jianping-bodoni-white-62", "jianping-farbe-pink", "jianping-printmarks-209", "jianping-raster-99", "jianping-raster-99", "jianping-werbung-108", "jianping-farbe-brownish", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-letters-89", "jianping-farbe-gruen", "jianping-farbe-gelb", "jianping-farbe-blau", "jianping-farbe-pink", "jianping-farbe-rot", "jianping-faces-62", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-raster-99", "jianping-random-178", "jianping-black-letters-50", "jianping-extracts-3298", "jianping-raster-99", "jianping-bodoni-white-62", "jianping-white-letters-57", "jianping-bodoni-black", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-random-178", "jianping-extracts-3298", "05-mix-47", "jianping-faces-31", "jianping-trashbags-marx-35", "jianping-shapes-35", "jianping-printmarks-209", "jianping-black-letters-50", "jianping-farbe-lila", "jianping-raster-99", "jianping-white-letters-22"};
+String[] superAssetNames = {"jianping-white-letters-22", "jianping-shapes-35", "jianping-bodoni-white-62", "jianping-farbe-pink", "jianping-printmarks-209", "jianping-raster-99", "jianping-raster-99", "jianping-werbung-108", "jianping-farbe-brownish", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-letters-89", "jianping-farbe-gruen", "jianping-farbe-gelb", "jianping-farbe-blau", "jianping-farbe-pink", "jianping-farbe-rot", "jianping-faces-62", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-richard1-152", "jianping-farbe-rgb", "jianping-raster-99", "jianping-random-178", "jianping-black-letters-50", "jianping-extracts-330", "jianping-raster-99", "jianping-bodoni-white-62", "jianping-white-letters-57", "jianping-bodoni-black", "jianping-auto-200305_130039__hsb_270_360_0_100_0_100", "jianping-random-178", "jianping-extracts-330", "05-mix-47", "jianping-faces-31", "jianping-trashbags-marx-35", "jianping-shapes-35", "jianping-printmarks-209", "jianping-black-letters-50", "jianping-farbe-lila", "jianping-raster-99", "jianping-white-letters-22"};
 
 /*
 // BLOCK 4
@@ -141,7 +142,7 @@ BW
 */
 
 boolean useNamedAssets = true;
-int currentSet = 0;
+int currentSet = 42;
 int currentSetLimit = 0;
 int increasePerFrame = 1;
 
@@ -150,9 +151,17 @@ int increasePerFrame = 1;
 *    @param startFrame                     beginning of range in frames
 *    @param endFrame                       ending of the range, as an offset: end = startFrame+endFrame  
 */
-boolean frameRange = false;
-int startFrame = 2352;// abgebrochen bei 4800; 20 frames zurückgesprungen
-int endFrame = 4953;
+boolean frameRange = true;
+int startFrame = 4953;// abgebrochen bei 4800; 20 frames zurückgesprungen
+int endFrame = 5178-startFrame;
+
+// 5178
+
+// Abbrüche
+/*
+0 - 2821 (restart von: 2821)
+0 - 
+
 
 /**
 *    @param useTimingArray                 should the timingArray be used
@@ -282,8 +291,10 @@ void draw() {
 
 void addingAssets() {
   if(useTimingArray) {
+    
       if(timingIndex < timingArray.length) {
-
+        int currentFrame = exporter.getFrame();
+        if(frameRange) currentFrame += startFrame;
         // <start advanceSetsByForce>
         if(advanceSetsByForce) {
           /*
@@ -296,10 +307,11 @@ void addingAssets() {
             }
           }
           */
-          if(exporter.getFrame() >= timingArray[timingIndex] && timingCheckpoints[timingIndex] == 0) {
+          if(currentFrame >= timingArray[timingIndex] && timingCheckpoints[timingIndex] == 0) {
             timingCheckpoints[timingIndex] = 1;
             resource.reset();
             timingIndex++;
+            if(timingIndex >= timingArray.length) timingIndex = timingArray.length-1; 
             resource.advance();
             int current = resource.getCurrentset();
             println("the current set is now: " + current + "[" + superAssetNames[timingIndex] +"]");
@@ -312,17 +324,17 @@ void addingAssets() {
             
           }
           //if(exporter.getFrame() >= timingArray[timingIndex]) {
-            if(exporter.getFrame() % increasePerFrame == 0) resource.update();
+            if(currentFrame % increasePerFrame == 0) resource.update();
           //}
            
         } else { // </end advanceSetsByForce>
         
-          if(exporter.getFrame() >= timingArray[timingIndex]) {
+          if(currentFrame >= timingArray[timingIndex]) {
             
               if(!resource.isFinished() ) {
                 println("not finished");
                 //if(advanceSetsByForce)
-                if(exporter.getFrame() % increasePerFrame == 0) resource.update();
+                if(currentFrame % increasePerFrame == 0) resource.update();
               } else {
                 timingIndex++;
                 println("finished");
@@ -337,7 +349,7 @@ void addingAssets() {
               }
             }
           }
-        } else timingIndex = 0;
+        }
       
     
       //timestamp = millis();

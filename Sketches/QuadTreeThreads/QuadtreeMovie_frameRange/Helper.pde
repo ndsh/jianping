@@ -23,7 +23,7 @@ int filesetIndex = 0;
 
 // timing array vars
 //long timestamp = 0;
-int timingIndex = 0;
+int timingIndex = currentSet;
 boolean timingCheckpoint = false;
 int lastFrame = 0;
 
